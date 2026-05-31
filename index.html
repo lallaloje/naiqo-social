@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Naiqo & Ollotechs — Contenido IA</title>
+  <title>Naiqo & Ollotechs â Contenido IA</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -280,7 +280,7 @@
     var eLabels={idea:'Idea',guion:'Guion',grabado:'Grabado',publicado:'Publicado'};
     lista.innerHTML=items.map(function(item){
       var fecha=new Date(item.fecha).toLocaleDateString('es-ES',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
-      var eBtns=ESTADOS.map(function(e){return '<button class="estado-btn '+(item.estado===e.key?e.cls:'')+'" onclick="cambiarEstado('+item.id+',''+e.key+'',event)">'+e.label+'</button>';}).join('');
+      var eBtns=ESTADOS.map(function(e){return '<button class="estado-btn '+(item.estado===e.key?e.cls:'')+'" onclick="cambiarEstado('+item.id+',\''+e.key+'\',event)">'+e.label+'</button>';}).join('');
       return '<div class="historia-item" onclick="abrirDetalle('+item.id+')"><div class="historia-item-header"><div><span class="marca-badge '+item.marca+'" style="margin-bottom:6px;display:inline-block">'+item.marca.toUpperCase()+'</span><div class="historia-titulo">'+(item.titulo_contenido||item.idea)+'</div></div><span class="estado-badge '+(eClasses[item.estado]||'estado-idea')+'">'+(eLabels[item.estado]||item.estado)+'</span></div><div class="historia-gancho">"'+item.gancho+'"</div><div class="historia-footer"><span class="historia-fecha">'+fecha+'</span><div class="estado-selector" onclick="event.stopPropagation()">'+eBtns+'</div></div></div>';
     }).join('');
   }
@@ -289,7 +289,7 @@
   function abrirDetalle(id){
     var item=historial.find(function(h){return h.id===id;});if(!item)return;modalItemId=id;
     document.getElementById('modal-titulo').textContent=item.titulo_contenido||item.idea;
-    function blk(label,text,bid){return '<div class="content-block"><div class="block-header"><span class="block-label">'+label+'</span><button class="copy-btn" onclick="copiar(''+bid+'',this)">Copiar</button></div><div class="block-text" id="'+bid+'">'+text+'</div></div>';}
+    function blk(label,text,bid){return '<div class="content-block"><div class="block-header"><span class="block-label">'+label+'</span><button class="copy-btn" onclick="copiar(\''+bid+'\',this)">Copiar</button></div><div class="block-text" id="'+bid+'">'+text+'</div></div>';}
     document.getElementById('modal-content').innerHTML='<div class="gancho-box" style="margin-bottom:16px"><div class="gancho-label">Gancho</div><div class="gancho-text">'+item.gancho+'</div></div>'+blk('Guion',item.guion,'modal-guion')+blk('Caption Instagram',item.caption_ig,'modal-ig')+blk('Caption TikTok',item.caption_tiktok,'modal-tiktok')+'<div class="content-block"><div class="block-header"><span class="block-label">Hashtags</span><button class="copy-btn" onclick="copiar('modal-hashtags',this)">Copiar</button></div><div class="hashtags-text" id="modal-hashtags">'+item.hashtags+'</div></div>';
     document.getElementById('modal-overlay').classList.add('open');
   }
