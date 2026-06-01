@@ -621,7 +621,14 @@
               </div>
               <div class="rec-indicator" id="rec-indicator"><div class="rec-dot"></div> REC</div>
               <div class="rec-timer" id="rec-timer">0:00</div>
-              <div class="tp-overlay" id="tp-overlay" style="display:none"><div class="tp-overlay-text" id="tp-overlay-text"></div></div>
+              <div class="tp-overlay" id="tp-overlay" style="display:none">
+                <div class="tp-overlay-controls">
+                  <button class="tp-ov-btn" onclick="toggleOverlayTp()" id="tp-ov-play">&#x23F8; Pausar</button>
+                  <button class="tp-ov-btn" onclick="changeOverlaySpeed(-0.1)">&#x2212; Lento</button>
+                  <button class="tp-ov-btn" onclick="changeOverlaySpeed(0.1)">&#x2B; R&#xE1;pido</button>
+                </div>
+                <div class="tp-overlay-text" id="tp-overlay-text"></div>
+              </div>
             </div>
             <div class="camera-controls">
               <button class="cam-btn cam-btn-secondary" id="btn-camera" onclick="activarCamara()">&#x1F4F7; Activar c&#xE1;mara</button>
@@ -1188,20 +1195,32 @@
     document.getElementById('app').style.display = 'block';
     renderHistorial(); renderCalendar();
   }
-  let _ovTpInt = null;
+  let _ovTpInt = null, _ovTpPos = 0, _ovTpSpeed = 0.35, _ovTpOn = false;
   function startOverlayTp() {
-    clearInterval(_ovTpInt); let pos = 0;
-    const ov = document.getElementById('tp-overlay');
+    clearInterval(_ovTpInt); _ovTpPos = 0; _ovTpOn = true;
     const txt = document.getElementById('tp-overlay-text');
-    txt.style.transform = 'translateY(0)';
+    const btn = document.getElementById('tp-ov-play');
+    if (txt) txt.style.transform = 'translateY(0)';
+    if (btn) btn.innerHTML = '&#x23F8; Pausar';
     _ovTpInt = setInterval(() => {
-      pos -= 0.35;
-      const max = -(txt.scrollHeight - (ov ? ov.clientHeight : 200) + 40);
-      if (pos < max) { pos = max; clearInterval(_ovTpInt); }
-      txt.style.transform = 'translateY(' + pos + 'px)';
+      if (!_ovTpOn) return;
+      _ovTpPos -= _ovTpSpeed;
+      const ov = document.getElementById('tp-overlay');
+      const t = document.getElementById('tp-overlay-text');
+      if (t) {
+        const max = -(t.scrollHeight - (ov ? ov.clientHeight : 200) + 30);
+        if (_ovTpPos < max) { _ovTpPos = max; _ovTpOn = false; if (btn) btn.innerHTML = '&#x25B6; Reanudar'; }
+        t.style.transform = 'translateY(' + _ovTpPos + 'px)';
+      }
     }, 16);
   }
-  function stopOverlayTp() { clearInterval(_ovTpInt); _ovTpInt = null; }
+  function stopOverlayTp() { clearInterval(_ovTpInt); _ovTpInt = null; _ovTpOn = false; }
+  function toggleOverlayTp() {
+    _ovTpOn = !_ovTpOn;
+    const btn = document.getElementById('tp-ov-play');
+    if (btn) btn.innerHTML = _ovTpOn ? '&#x23F8; Pausar' : '&#x25B6; Reanudar';
+  }
+  function changeOverlaySpeed(d) { _ovTpSpeed = Math.max(0.1, Math.min(1.5, _ovTpSpeed + d)); }
 </script>
 </body>
 </html>
