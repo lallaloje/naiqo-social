@@ -245,6 +245,8 @@
       padding: 4px 12px; border-radius: 20px; display: none;
     }
 
+    .tp-overlay { position:absolute; inset:0; z-index:10; pointer-events:none; background:linear-gradient(to bottom,rgba(0,0,0,.1) 0%,rgba(0,0,0,.78) 18%,rgba(0,0,0,.78) 82%,rgba(0,0,0,.1) 100%); display:flex; align-items:center; overflow:hidden; }
+    .tp-overlay-text { color:#fff; font-size:18px; font-weight:600; line-height:1.9; text-align:center; padding:16px; text-shadow:0 2px 6px rgba(0,0,0,.9); width:100%; }
     .camera-controls { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
     .cam-btn {
       padding: 10px 20px; border-radius: 12px; border: none; font-size: 14px;
@@ -619,6 +621,7 @@
               </div>
               <div class="rec-indicator" id="rec-indicator"><div class="rec-dot"></div> REC</div>
               <div class="rec-timer" id="rec-timer">0:00</div>
+              <div class="tp-overlay" id="tp-overlay" style="display:none"><div class="tp-overlay-text" id="tp-overlay-text"></div></div>
             </div>
             <div class="camera-controls">
               <button class="cam-btn cam-btn-secondary" id="btn-camera" onclick="activarCamara()">&#x1F4F7; Activar c&#xE1;mara</button>
@@ -1052,6 +1055,15 @@
     };
     mediaRecorder.start(100);
     document.getElementById('btn-record').style.display = 'none';
+    document.getElementById('btn-stop').disabled = false;
+    const _tp = document.getElementById('teleprompter-text');
+    const _ov = document.getElementById('tp-overlay-text');
+    if (_tp && _ov && _tp.textContent.trim() && !_tp.textContent.includes('Selecciona')) {
+      _ov.textContent = _tp.textContent;
+      _ov.style.transform = 'translateY(0)';
+      document.getElementById('tp-overlay').style.display = 'flex';
+      startOverlayTp();
+    }
     document.getElementById('btn-stop').style.display = 'inline-flex';
     document.getElementById('btn-camera').disabled = true;
     document.getElementById('rec-indicator').style.display = 'flex';
@@ -1070,6 +1082,8 @@
     if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
     clearInterval(recTimerInterval);
     document.getElementById('btn-stop').style.display = 'none';
+    document.getElementById('tp-overlay').style.display = 'none';
+    stopOverlayTp();
     document.getElementById('btn-record').style.display = 'inline-flex';
     document.getElementById('btn-record').textContent = '\u23FA Grabar de nuevo';
     document.getElementById('rec-indicator').style.display = 'none';
@@ -1174,6 +1188,20 @@
     document.getElementById('app').style.display = 'block';
     renderHistorial(); renderCalendar();
   }
+  let _ovTpInt = null;
+  function startOverlayTp() {
+    clearInterval(_ovTpInt); let pos = 0;
+    const ov = document.getElementById('tp-overlay');
+    const txt = document.getElementById('tp-overlay-text');
+    txt.style.transform = 'translateY(0)';
+    _ovTpInt = setInterval(() => {
+      pos -= 0.35;
+      const max = -(txt.scrollHeight - (ov ? ov.clientHeight : 200) + 40);
+      if (pos < max) { pos = max; clearInterval(_ovTpInt); }
+      txt.style.transform = 'translateY(' + pos + 'px)';
+    }, 16);
+  }
+  function stopOverlayTp() { clearInterval(_ovTpInt); _ovTpInt = null; }
 </script>
 </body>
 </html>
