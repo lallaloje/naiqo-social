@@ -3,129 +3,506 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Naiqo & Ollotechs Ã¢ÂÂ Contenido IA</title>
+  <title>Naiqo &amp; Ollotechs — Contenido IA</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --pink: #E8007A; --purple: #7700CC; --dark: #0D0D1A; --card: #14142A;
-      --border: #2A2A4A; --text: #E8E8F0; --muted: #8888AA;
-      --naiqo: #E8007A; --ollotechs: #7700CC;
+      --pink: #E8007A;
+      --purple: #7700CC;
+      --dark: #0D0D1A;
+      --card: #14142A;
+      --card2: #1A1A35;
+      --border: #2A2A4A;
+      --text: #E8E8F0;
+      --muted: #8888AA;
+      --naiqo: #E8007A;
+      --ollotechs: #7700CC;
+      --green: #00CC77;
+      --orange: #FF8844;
+      --blue: #4488FF;
+      --yellow: #FFD700;
     }
-    body { background: var(--dark); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
-    #login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-    .login-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 48px 40px; width: 100%; max-width: 400px; text-align: center; }
-    .login-logo { font-size: 28px; font-weight: 900; letter-spacing: 3px; background: linear-gradient(135deg, var(--pink), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ===== LOGIN ===== */
+    #login-screen {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; padding: 20px;
+    }
+    .login-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 48px 40px;
+      width: 100%; max-width: 400px; text-align: center;
+    }
+    .login-logo {
+      font-size: 28px; font-weight: 900; letter-spacing: 3px;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
     .login-sub { color: var(--muted); font-size: 14px; margin-bottom: 36px; }
-    .login-card input { width: 100%; background: var(--dark); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; color: var(--text); font-size: 16px; margin-bottom: 16px; outline: none; }
+    .login-card input {
+      width: 100%; background: var(--dark); border: 1px solid var(--border);
+      border-radius: 12px; padding: 14px 18px; color: var(--text);
+      font-size: 16px; margin-bottom: 16px; outline: none; transition: border-color 0.2s;
+    }
+    .login-card input:focus { border-color: var(--purple); }
+    .login-error { color: #ff4466; font-size: 13px; margin-bottom: 12px; display: none; }
+
+    /* ===== APP SHELL ===== */
     #app { display: none; }
-    header { background: var(--card); border-bottom: 1px solid var(--border); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-    .header-logo { font-size: 20px; font-weight: 900; letter-spacing: 2px; background: linear-gradient(135deg, var(--pink), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .header-tabs { display: flex; gap: 4px; background: var(--dark); padding: 4px; border-radius: 10px; }
-    .tab-btn { padding: 8px 18px; border-radius: 8px; border: none; background: transparent; color: var(--muted); font-size: 14px; font-weight: 600; cursor: pointer; }
+
+    header {
+      background: var(--card); border-bottom: 1px solid var(--border);
+      padding: 14px 24px; display: flex; align-items: center;
+      justify-content: space-between; position: sticky; top: 0; z-index: 100;
+    }
+    .header-logo {
+      font-size: 18px; font-weight: 900; letter-spacing: 2px;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .header-tabs {
+      display: flex; gap: 4px; background: var(--dark);
+      padding: 4px; border-radius: 10px;
+    }
+    .tab-btn {
+      padding: 8px 16px; border-radius: 8px; border: none;
+      background: transparent; color: var(--muted); font-size: 13px;
+      font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
     .tab-btn.active { background: var(--card); color: var(--text); }
-    main { max-width: 900px; margin: 0 auto; padding: 32px 20px; }
+
+    main { max-width: 960px; margin: 0 auto; padding: 32px 20px; }
+
+    /* ===== FORMS ===== */
     .section-title { font-size: 22px; font-weight: 700; margin-bottom: 24px; }
-    .section-title span { background: linear-gradient(135deg, var(--pink), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .form-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 28px; margin-bottom: 24px; }
-    .form-label { font-size: 12px; font-weight: 700; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; margin-bottom: 12px; display: block; }
+    .section-title span {
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .form-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 28px; margin-bottom: 24px;
+    }
+    .form-label {
+      font-size: 12px; font-weight: 700; letter-spacing: 1px;
+      color: var(--muted); text-transform: uppercase; margin-bottom: 12px; display: block;
+    }
+
     .brand-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
-    .brand-btn { padding: 16px; border-radius: 14px; border: 2px solid var(--border); background: var(--dark); color: var(--muted); cursor: pointer; text-align: center; }
+    .brand-btn {
+      padding: 16px; border-radius: 14px; border: 2px solid var(--border);
+      background: var(--dark); color: var(--muted); cursor: pointer; transition: all 0.2s; text-align: center;
+    }
     .brand-btn .brand-name { font-size: 18px; font-weight: 800; letter-spacing: 2px; display: block; margin-bottom: 4px; }
-    .brand-btn .brand-desc { font-size: 12px; }
+    .brand-btn .brand-desc { font-size: 12px; line-height: 1.4; }
     .brand-btn[data-brand="naiqo"].selected { border-color: var(--naiqo); background: rgba(232,0,122,0.08); color: var(--text); }
     .brand-btn[data-brand="naiqo"].selected .brand-name { color: var(--naiqo); }
     .brand-btn[data-brand="ollotechs"].selected { border-color: var(--ollotechs); background: rgba(119,0,204,0.08); color: var(--text); }
     .brand-btn[data-brand="ollotechs"].selected .brand-name { color: var(--ollotechs); }
+
     .format-selector { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
-    .format-btn { padding: 14px 18px; border-radius: 12px; border: 2px solid var(--border); background: var(--dark); color: var(--muted); cursor: pointer; text-align: left; display: flex; align-items: center; gap: 12px; }
+    .format-btn {
+      padding: 14px 18px; border-radius: 12px; border: 2px solid var(--border);
+      background: var(--dark); color: var(--muted); cursor: pointer; transition: all 0.2s;
+      text-align: left; display: flex; align-items: center; gap: 12px;
+    }
     .format-btn .format-emoji { font-size: 20px; flex-shrink: 0; }
     .format-btn .format-info .format-name { font-weight: 700; font-size: 15px; color: var(--text); display: block; margin-bottom: 2px; }
-    .format-btn .format-info .format-desc { font-size: 12px; }
+    .format-btn .format-info .format-desc { font-size: 12px; line-height: 1.4; }
     .format-btn.selected { border-color: var(--purple); background: rgba(119,0,204,0.08); color: var(--text); }
-    .idea-input { width: 100%; background: var(--dark); border: 2px solid var(--border); border-radius: 12px; padding: 16px 18px; color: var(--text); font-size: 16px; font-family: inherit; resize: vertical; min-height: 80px; outline: none; margin-bottom: 20px; }
+
+    .idea-input {
+      width: 100%; background: var(--dark); border: 2px solid var(--border);
+      border-radius: 12px; padding: 16px 18px; color: var(--text); font-size: 16px;
+      font-family: inherit; resize: vertical; min-height: 80px; outline: none;
+      transition: border-color 0.2s; margin-bottom: 20px;
+    }
+    .idea-input:focus { border-color: var(--purple); }
     .idea-input::placeholder { color: var(--muted); }
-    .btn-generate { width: 100%; padding: 18px; border-radius: 14px; border: none; background: linear-gradient(135deg, var(--pink), var(--purple)); color: white; font-size: 17px; font-weight: 700; cursor: pointer; }
+
+    .btn-generate {
+      width: 100%; padding: 18px; border-radius: 14px; border: none;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      color: white; font-size: 17px; font-weight: 700; cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s; letter-spacing: 0.5px;
+    }
+    .btn-generate:hover { opacity: 0.92; }
+    .btn-generate:active { transform: scale(0.98); }
     .btn-generate:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ===== RESULTADO ===== */
     #resultado { display: none; margin-top: 28px; }
-    .resultado-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+
+    .resultado-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+    }
     .resultado-titulo { font-size: 18px; font-weight: 700; }
-    .marca-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; letter-spacing: 1px; }
+
+    .marca-badge {
+      padding: 4px 12px; border-radius: 20px; font-size: 12px;
+      font-weight: 700; letter-spacing: 1px;
+    }
     .marca-badge.naiqo { background: rgba(232,0,122,0.15); color: var(--naiqo); }
     .marca-badge.ollotechs { background: rgba(119,0,204,0.15); color: #AA44FF; }
-    .gancho-box { background: linear-gradient(135deg, rgba(232,0,122,0.1), rgba(119,0,204,0.1)); border: 1px solid rgba(119,0,204,0.3); border-radius: 16px; padding: 20px 24px; margin-bottom: 20px; }
+
+    .gancho-box {
+      background: linear-gradient(135deg, rgba(232,0,122,0.1), rgba(119,0,204,0.1));
+      border: 1px solid rgba(119,0,204,0.3); border-radius: 16px;
+      padding: 20px 24px; margin-bottom: 20px;
+    }
     .gancho-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--purple); text-transform: uppercase; margin-bottom: 8px; }
     .gancho-text { font-size: 20px; font-weight: 700; line-height: 1.4; }
-    .content-block { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px 24px; margin-bottom: 16px; }
-    .block-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+
+    .content-block {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 20px 24px; margin-bottom: 16px;
+    }
+    .block-header {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;
+    }
     .block-label { font-size: 12px; font-weight: 700; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; }
-    .copy-btn { padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 12px; font-weight: 600; cursor: pointer; }
-    .copy-btn.copied { border-color: #00CC77; color: #00CC77; }
+
+    .copy-btn {
+      padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border);
+      background: transparent; color: var(--muted); font-size: 12px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .copy-btn:hover { border-color: var(--purple); color: var(--text); }
+    .copy-btn.copied { border-color: var(--green); color: var(--green); }
+
     .block-text { font-size: 15px; line-height: 1.7; color: var(--text); white-space: pre-wrap; }
     .hashtags-text { font-size: 13px; color: #AA88FF; line-height: 1.8; word-break: break-word; }
-    .btn-guardar { width: 100%; padding: 16px; border-radius: 14px; border: 2px solid var(--purple); background: transparent; color: var(--purple); font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 8px; }
-    .btn-guardar.guardado { border-color: #00CC77; color: #00CC77; }
+
+    .btn-guardar {
+      width: 100%; padding: 16px; border-radius: 14px; border: 2px solid var(--purple);
+      background: transparent; color: var(--purple); font-size: 16px; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; margin-top: 8px;
+    }
+    .btn-guardar:hover { background: rgba(119,0,204,0.1); }
+    .btn-guardar.guardado { border-color: var(--green); color: var(--green); }
+
+    /* ===== ESTUDIO ===== */
+    #tab-estudio { display: none; }
+
+    .estudio-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    .estudio-left, .estudio-right { display: flex; flex-direction: column; gap: 16px; }
+
+    .estudio-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 20px; overflow: hidden;
+    }
+    .estudio-card-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 1px;
+      color: var(--muted); text-transform: uppercase; margin-bottom: 16px;
+    }
+
+    .estudio-select-prompt {
+      text-align: center; padding: 32px 20px; color: var(--muted);
+    }
+    .estudio-select-prompt .big-icon { font-size: 40px; margin-bottom: 12px; }
+    .estudio-select-prompt p { font-size: 14px; margin-bottom: 16px; }
+
+    .estudio-content-info { display: none; }
+    .estudio-gancho { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.4; margin-bottom: 8px; }
+    .estudio-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+    .camera-area {
+      position: relative; background: #000; border-radius: 12px;
+      overflow: hidden; aspect-ratio: 9/16; max-height: 320px;
+    }
+    #camera-preview, #playback-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    #playback-video { display: none; }
+    .camera-placeholder {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; color: var(--muted); gap: 8px;
+    }
+    .camera-placeholder .cam-icon { font-size: 36px; }
+    .camera-placeholder p { font-size: 13px; }
+
+    .rec-indicator {
+      position: absolute; top: 12px; right: 12px;
+      background: #FF0000; color: white; font-size: 11px; font-weight: 700;
+      padding: 4px 10px; border-radius: 20px; display: none; align-items: center; gap: 6px;
+    }
+    .rec-dot { width: 8px; height: 8px; background: white; border-radius: 50%; animation: blink 1s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .rec-timer {
+      position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+      background: rgba(0,0,0,0.6); color: white; font-size: 14px; font-weight: 700;
+      padding: 4px 12px; border-radius: 20px; display: none;
+    }
+
+    .camera-controls { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+    .cam-btn {
+      padding: 10px 20px; border-radius: 12px; border: none; font-size: 14px;
+      font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px;
+    }
+    .cam-btn-primary { background: linear-gradient(135deg, var(--pink), var(--purple)); color: white; }
+    .cam-btn-danger { background: #FF0000; color: white; }
+    .cam-btn-secondary { background: var(--dark); border: 1px solid var(--border); color: var(--text); }
+    .cam-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .download-area { display: none; margin-top: 12px; }
+    .download-area p { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+    .btn-download {
+      width: 100%; padding: 14px; border-radius: 12px; border: 2px solid var(--green);
+      background: rgba(0,204,119,0.08); color: var(--green); font-size: 15px;
+      font-weight: 700; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-download:hover { background: rgba(0,204,119,0.15); }
+
+    .teleprompter-area {
+      background: #000; border-radius: 12px; padding: 20px;
+      min-height: 200px; position: relative; overflow: hidden; max-height: 300px; overflow-y: auto;
+    }
+    .teleprompter-text { font-size: 18px; line-height: 1.8; color: #fff; font-weight: 500; white-space: pre-wrap; }
+    .teleprompter-controls { display: flex; gap: 8px; margin-top: 12px; justify-content: center; flex-wrap: wrap; }
+    .tp-btn {
+      padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--dark); color: var(--text); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
+    .tp-btn:hover { border-color: var(--purple); }
+    .tp-btn.active { background: var(--purple); border-color: var(--purple); color: white; }
+    .tp-speed { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+    .tp-speed input { width: 80px; accent-color: var(--purple); }
+
+    .publish-caption-block {
+      background: var(--dark); border: 1px solid var(--border); border-radius: 12px;
+      padding: 14px; margin-bottom: 10px;
+    }
+    .publish-caption-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .publish-caption-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+    .publish-caption-text { font-size: 13px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+
+    .social-buttons { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+    .social-btn {
+      flex: 1; min-width: 120px; padding: 14px 10px; border-radius: 14px; border: none;
+      font-size: 14px; font-weight: 700; cursor: pointer; display: flex;
+      align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; text-decoration: none;
+    }
+    .social-btn-ig { background: linear-gradient(135deg, #E1306C, #833AB4, #F77737); color: white; }
+    .social-btn-tt { background: #010101; border: 1px solid #333; color: white; }
+    .social-btn-yt { background: #FF0000; color: white; }
+    .social-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* ===== PLANNER ===== */
+    #tab-planner { display: none; }
+
+    .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .calendar-nav-btn {
+      width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border);
+      background: var(--card); color: var(--text); font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    }
+    .calendar-nav-btn:hover { border-color: var(--purple); }
+    .calendar-month { font-size: 18px; font-weight: 700; }
+
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    .cal-day-header { text-align: center; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; padding: 8px 0; }
+    .cal-day {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      min-height: 80px; padding: 8px; cursor: pointer; transition: border-color 0.2s;
+    }
+    .cal-day:hover { border-color: var(--purple); }
+    .cal-day.other-month { opacity: 0.3; }
+    .cal-day.today { border-color: var(--purple); }
+    .cal-day-number { font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 4px; }
+    .cal-day.today .cal-day-number { color: var(--purple); }
+    .cal-post {
+      font-size: 10px; font-weight: 600; padding: 3px 6px; border-radius: 4px;
+      margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer;
+    }
+    .cal-post.naiqo { background: rgba(232,0,122,0.2); color: var(--naiqo); }
+    .cal-post.ollotechs { background: rgba(119,0,204,0.2); color: #AA44FF; }
+
+    .planner-list { margin-top: 28px; }
+    .planner-list-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: var(--muted); }
+
+    /* ===== HISTORIAL ===== */
     #tab-historial { display: none; }
+
     .filtros { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-    .filtro-btn { padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 13px; font-weight: 600; cursor: pointer; }
+    .filtro-btn {
+      padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border);
+      background: transparent; color: var(--muted); font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+    }
     .filtro-btn.active { background: var(--card); color: var(--text); border-color: var(--purple); }
-    .historia-item { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 14px; cursor: pointer; }
+
+    .historia-item {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 20px; margin-bottom: 14px; cursor: pointer; transition: border-color 0.2s;
+    }
     .historia-item:hover { border-color: var(--purple); }
     .historia-item-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
     .historia-titulo { font-weight: 700; font-size: 15px; line-height: 1.3; }
-    .estado-badge { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
-    .estado-idea { background: rgba(255,200,0,0.12); color: #FFD700; }
-    .estado-guion { background: rgba(0,150,255,0.12); color: #4488FF; }
-    .estado-grabado { background: rgba(255,100,0,0.12); color: #FF8844; }
-    .estado-publicado { background: rgba(0,204,119,0.12); color: #00CC77; }
+    .historia-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+    .estado-badge { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+    .estado-idea { background: rgba(255,200,0,0.12); color: var(--yellow); }
+    .estado-guion { background: rgba(0,150,255,0.12); color: var(--blue); }
+    .estado-grabado { background: rgba(255,100,0,0.12); color: var(--orange); }
+    .estado-publicado { background: rgba(0,204,119,0.12); color: var(--green); }
+
     .historia-gancho { font-size: 13px; color: var(--muted); margin-bottom: 12px; font-style: italic; }
     .historia-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
     .historia-fecha { font-size: 11px; color: var(--muted); }
+    .historia-fecha-pub { font-size: 11px; color: var(--purple); font-weight: 600; }
+
     .estado-selector { display: flex; gap: 6px; flex-wrap: wrap; }
-    .estado-btn { padding: 4px 10px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 11px; font-weight: 600; cursor: pointer; }
-    .estado-btn.active-idea { border-color: #FFD700; color: #FFD700; background: rgba(255,200,0,0.08); }
-    .estado-btn.active-guion { border-color: #4488FF; color: #4488FF; background: rgba(0,150,255,0.08); }
-    .estado-btn.active-grabado { border-color: #FF8844; color: #FF8844; background: rgba(255,100,0,0.08); }
-    .estado-btn.active-publicado { border-color: #00CC77; color: #00CC77; background: rgba(0,204,119,0.08); }
+    .estado-btn {
+      padding: 4px 10px; border-radius: 8px; border: 1px solid var(--border);
+      background: transparent; color: var(--muted); font-size: 11px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .estado-btn:hover { border-color: var(--purple); color: var(--text); }
+    .estado-btn.active-idea { border-color: var(--yellow); color: var(--yellow); background: rgba(255,200,0,0.08); }
+    .estado-btn.active-guion { border-color: var(--blue); color: var(--blue); background: rgba(0,150,255,0.08); }
+    .estado-btn.active-grabado { border-color: var(--orange); color: var(--orange); background: rgba(255,100,0,0.08); }
+    .estado-btn.active-publicado { border-color: var(--green); color: var(--green); background: rgba(0,204,119,0.08); }
+
     .empty-state { text-align: center; padding: 60px 20px; color: var(--muted); }
     .empty-state .empty-icon { font-size: 48px; margin-bottom: 16px; }
-    .spinner { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: white; animation: spin 0.8s ease-in-out infinite; vertical-align: middle; margin-right: 8px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; padding: 20px; overflow-y: auto; }
+    .empty-state p { font-size: 16px; }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75); z-index: 200; padding: 20px; overflow-y: auto;
+    }
     .modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
-    .modal-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 28px; width: 100%; max-width: 700px; margin: auto; }
+    .modal-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+      padding: 28px; width: 100%; max-width: 700px; margin: auto;
+    }
     .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-    .modal-close { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    .delete-btn { padding: 8px 16px; border-radius: 10px; border: 1px solid rgba(255,50,50,0.3); background: transparent; color: #FF5555; font-size: 13px; font-weight: 600; cursor: pointer; }
-    @media (max-width: 600px) {
+    .modal-close {
+      width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border);
+      background: transparent; color: var(--muted); font-size: 18px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    }
+    .modal-close:hover { border-color: var(--text); color: var(--text); }
+    .modal-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+    .btn-edit-modal {
+      padding: 8px 16px; border-radius: 10px; border: 1px solid var(--purple);
+      background: transparent; color: var(--purple); font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-edit-modal:hover { background: rgba(119,0,204,0.1); }
+    .btn-edit-modal.editing { background: var(--purple); color: white; }
+
+    .btn-save-modal {
+      padding: 8px 16px; border-radius: 10px; border: none;
+      background: var(--green); color: white; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; display: none;
+    }
+    .btn-save-modal:hover { opacity: 0.85; }
+
+    .delete-btn {
+      padding: 8px 16px; border-radius: 10px; border: 1px solid rgba(255,50,50,0.3);
+      background: transparent; color: #FF5555; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .delete-btn:hover { background: rgba(255,50,50,0.1); }
+
+    .editable-field {
+      outline: none; white-space: pre-wrap; cursor: default;
+      border-radius: 8px; transition: background 0.2s; padding: 4px;
+    }
+    .edit-mode .editable-field {
+      background: rgba(119,0,204,0.08); border: 1px solid var(--purple);
+      cursor: text; padding: 8px;
+    }
+
+    .fecha-pub-row {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+      padding: 12px 16px; background: var(--dark); border-radius: 12px; border: 1px solid var(--border);
+    }
+    .fecha-pub-row label { font-size: 13px; color: var(--muted); font-weight: 600; white-space: nowrap; }
+    .fecha-pub-input {
+      background: transparent; border: none; color: var(--text); font-size: 13px;
+      font-family: inherit; outline: none; flex: 1;
+    }
+    .fecha-pub-input::-webkit-calendar-picker-indicator { filter: invert(0.5); cursor: pointer; }
+
+    .btn-estudio {
+      width: 100%; padding: 14px; border-radius: 12px;
+      background: linear-gradient(135deg, rgba(232,0,122,0.15), rgba(119,0,204,0.15));
+      border: 1px solid rgba(119,0,204,0.3); color: var(--text); font-size: 15px;
+      font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 12px;
+    }
+    .btn-estudio:hover { border-color: var(--purple); }
+
+    .spinner {
+      display: inline-block; width: 20px; height: 20px;
+      border: 3px solid rgba(255,255,255,0.3); border-radius: 50%;
+      border-top-color: white; animation: spin 0.8s ease-in-out infinite;
+      vertical-align: middle; margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 700px) {
       .brand-selector { grid-template-columns: 1fr; }
+      .estudio-layout { grid-template-columns: 1fr; }
       .header-tabs { display: none; }
-      .mobile-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); border-top: 1px solid var(--border); display: flex; padding: 12px 0 20px; z-index: 100; }
-      .mobile-nav-btn { flex: 1; background: none; border: none; color: var(--muted); font-size: 12px; font-weight: 600; cursor: pointer; padding: 8px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+      .mobile-nav {
+        position: fixed; bottom: 0; left: 0; right: 0;
+        background: var(--card); border-top: 1px solid var(--border);
+        display: flex; padding: 10px 0 20px; z-index: 100;
+      }
+      .mobile-nav-btn {
+        flex: 1; background: none; border: none; color: var(--muted);
+        font-size: 11px; font-weight: 600; cursor: pointer; padding: 6px;
+        display: flex; flex-direction: column; align-items: center; gap: 3px; transition: color 0.2s;
+      }
       .mobile-nav-btn.active { color: var(--purple); }
-      .mobile-nav-btn .nav-icon { font-size: 22px; }
+      .mobile-nav-btn .nav-icon { font-size: 20px; }
       main { padding-bottom: 90px; }
     }
-    @media (min-width: 601px) { .mobile-nav { display: none; } }
+    @media (min-width: 701px) { .mobile-nav { display: none; } }
   </style>
 </head>
 <body>
+
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">NAIQO</div>
-    <div class="login-sub">Generador de contenido para redes sociales</div>
-    <input type="password" id="password-input" placeholder="Contrasena" autocomplete="current-password">
+    <div class="login-sub">Estudio de contenido para redes sociales</div>
+    <input type="password" id="password-input" placeholder="Contraseña" autocomplete="current-password">
+    <div class="login-error" id="login-error">Contraseña incorrecta. Inténtalo de nuevo.</div>
     <button class="btn-generate" onclick="login()">Entrar</button>
   </div>
 </div>
+
+<!-- APP -->
 <div id="app">
   <header>
-    <div class="header-logo">NAIQO x AI</div>
+    <div class="header-logo">NAIQO × STUDIO</div>
     <div class="header-tabs">
-      <button class="tab-btn active" onclick="showTab('generar',this)">Generar</button>
-      <button class="tab-btn" onclick="showTab('historial',this)">Historial</button>
+      <button class="tab-btn active" onclick="showTab('generar', this)">✨ Generar</button>
+      <button class="tab-btn" onclick="showTab('estudio', this)">🎥 Estudio</button>
+      <button class="tab-btn" onclick="showTab('planner', this)">📆 Planner</button>
+      <button class="tab-btn" onclick="showTab('historial', this)">📋 Historial</button>
     </div>
   </header>
+
   <main>
+    <!-- TAB GENERAR -->
     <div id="tab-generar">
       <div class="section-title">Crear nuevo <span>contenido</span></div>
       <div class="form-card">
@@ -133,168 +510,669 @@
         <div class="brand-selector">
           <button class="brand-btn" data-brand="naiqo" onclick="selectBrand('naiqo')">
             <span class="brand-name">NAIQO</span>
-            <span class="brand-desc">IA para salones de unas</span>
+            <span class="brand-desc">IA para salones de uñas</span>
           </button>
           <button class="brand-btn" data-brand="ollotechs" onclick="selectBrand('ollotechs')">
             <span class="brand-name">OLLOTECHS</span>
-            <span class="brand-desc">Consultoria IA sector belleza</span>
+            <span class="brand-desc">Consultoría IA sector belleza</span>
           </button>
         </div>
         <span class="form-label">2. Elige el formato</span>
         <div class="format-selector">
           <button class="format-btn" data-formato="dolor" onclick="selectFormato('dolor')">
-            <span class="format-emoji">&#x1F4B8;</span>
+            <span class="format-emoji">💸</span>
             <div class="format-info">
-              <span class="format-name">"Esto te esta costando dinero"</span>
-              <span class="format-desc">Revela un problema que el salon no sabe que tiene</span>
+              <span class="format-name">"Esto te está costando dinero"</span>
+              <span class="format-desc">Revela un problema que el salón no sabe que tiene</span>
             </div>
           </button>
           <button class="format-btn" data-formato="demo" onclick="selectFormato('demo')">
-            <span class="format-emoji">&#x1F916;</span>
+            <span class="format-emoji">🤖</span>
             <div class="format-info">
               <span class="format-name">"Mira lo que hace la IA"</span>
-              <span class="format-desc">Demuestra la tecnologia en accion, sin explicaciones largas</span>
+              <span class="format-desc">Demuestra la tecnología en acción, sin explicaciones largas</span>
             </div>
           </button>
           <button class="format-btn" data-formato="insight" onclick="selectFormato('insight')">
-            <span class="format-emoji">&#x1F4A1;</span>
+            <span class="format-emoji">💡</span>
             <div class="format-info">
-              <span class="format-name">"Lo que descubri trabajando con salones"</span>
+              <span class="format-name">"Lo que descubrí trabajando con salones"</span>
               <span class="format-desc">Historia personal que genera autoridad y confianza</span>
             </div>
           </button>
         </div>
         <span class="form-label">3. Tu idea (en pocas palabras)</span>
-        <textarea class="idea-input" id="idea-input" placeholder="Ej: Los salones pierden clientes porque no contestan WhatsApp fuera de horario..."></textarea>
-        <button class="btn-generate" id="btn-generate" onclick="generar()">Generar contenido</button>
+        <textarea class="idea-input" id="idea-input"
+          placeholder="Ej: Los salones pierden clientes porque no contestan WhatsApp fuera de horario..."></textarea>
+        <button class="btn-generate" id="btn-generate" onclick="generar()">✨ Generar contenido</button>
       </div>
+
       <div id="resultado">
         <div class="resultado-header">
           <div class="resultado-titulo" id="resultado-titulo">Contenido generado</div>
           <span class="marca-badge" id="resultado-marca-badge"></span>
         </div>
         <div class="gancho-box">
-          <div class="gancho-label">Gancho - Primera frase del video</div>
+          <div class="gancho-label">🎣 Gancho — Primera frase del vídeo</div>
           <div class="gancho-text" id="resultado-gancho"></div>
         </div>
         <div class="content-block">
-          <div class="block-header"><span class="block-label">Guion del video</span><button class="copy-btn" onclick="copiar('resultado-guion',this)">Copiar</button></div>
+          <div class="block-header">
+            <span class="block-label">🎬 Guión del vídeo</span>
+            <button class="copy-btn" onclick="copiar('resultado-guion', this)">Copiar</button>
+          </div>
           <div class="block-text" id="resultado-guion"></div>
         </div>
         <div class="content-block">
-          <div class="block-header"><span class="block-label">Caption Instagram</span><button class="copy-btn" onclick="copiar('resultado-ig',this)">Copiar</button></div>
+          <div class="block-header">
+            <span class="block-label">📸 Caption Instagram</span>
+            <button class="copy-btn" onclick="copiar('resultado-ig', this)">Copiar</button>
+          </div>
           <div class="block-text" id="resultado-ig"></div>
         </div>
         <div class="content-block">
-          <div class="block-header"><span class="block-label">Caption TikTok</span><button class="copy-btn" onclick="copiar('resultado-tiktok',this)">Copiar</button></div>
+          <div class="block-header">
+            <span class="block-label">🎵 Caption TikTok</span>
+            <button class="copy-btn" onclick="copiar('resultado-tiktok', this)">Copiar</button>
+          </div>
           <div class="block-text" id="resultado-tiktok"></div>
         </div>
         <div class="content-block">
-          <div class="block-header"><span class="block-label">Hashtags</span><button class="copy-btn" onclick="copiar('resultado-hashtags',this)">Copiar</button></div>
+          <div class="block-header">
+            <span class="block-label"># Hashtags</span>
+            <button class="copy-btn" onclick="copiar('resultado-hashtags', this)">Copiar</button>
+          </div>
           <div class="hashtags-text" id="resultado-hashtags"></div>
         </div>
-        <button class="btn-guardar" id="btn-guardar" onclick="guardarEnHistorial()">Guardar en historial</button>
+        <button class="btn-guardar" id="btn-guardar" onclick="guardarEnHistorial()">💾 Guardar en historial</button>
+        <button class="btn-estudio" id="btn-ir-estudio" onclick="irAlEstudio()" style="display:none">🎥 Ir al Estudio a grabar este contenido</button>
       </div>
     </div>
+
+    <!-- TAB ESTUDIO -->
+    <div id="tab-estudio">
+      <div class="section-title">🎥 <span>Estudio</span> de grabación</div>
+      <div class="form-card" id="estudio-selector-card">
+        <span class="form-label">Contenido a grabar</span>
+        <div id="estudio-content-info" class="estudio-content-info" style="display:none">
+          <div class="estudio-gancho" id="estudio-gancho-text"></div>
+          <div class="estudio-meta" id="estudio-meta"></div>
+          <button class="tp-btn" style="margin-top:12px" onclick="limpiarContenidoEstudio()">Cambiar contenido</button>
+        </div>
+        <div id="estudio-select-prompt" class="estudio-select-prompt">
+          <div class="big-icon">🎬</div>
+          <p>Selecciona un contenido del historial para grabar</p>
+          <button class="cam-btn cam-btn-primary" onclick="showTab('historial', document.querySelector('[onclick*=historial]'))">Ver historial</button>
+        </div>
+      </div>
+
+      <div class="estudio-layout">
+        <div class="estudio-left">
+          <div class="estudio-card">
+            <div class="estudio-card-title">📹 Grabación</div>
+            <div class="camera-area">
+              <video id="camera-preview" autoplay muted playsinline></video>
+              <video id="playback-video" controls></video>
+              <div class="camera-placeholder" id="camera-placeholder">
+                <div class="cam-icon">📷</div>
+                <p>Activa la cámara para empezar</p>
+              </div>
+              <div class="rec-indicator" id="rec-indicator"><div class="rec-dot"></div> REC</div>
+              <div class="rec-timer" id="rec-timer">0:00</div>
+            </div>
+            <div class="camera-controls">
+              <button class="cam-btn cam-btn-secondary" id="btn-camera" onclick="activarCamara()">📷 Activar cámara</button>
+              <button class="cam-btn cam-btn-primary" id="btn-record" onclick="iniciarGrabacion()" disabled>⏺ Grabar</button>
+              <button class="cam-btn cam-btn-danger" id="btn-stop" onclick="detenerGrabacion()" disabled style="display:none">⏹ Parar</button>
+            </div>
+            <div class="download-area" id="download-area">
+              <p>✅ Vídeo grabado correctamente</p>
+              <button class="btn-download" onclick="descargarVideo()">⬇️ Descargar vídeo</button>
+            </div>
+          </div>
+          <div class="estudio-card">
+            <div class="estudio-card-title">📤 Publicar en redes</div>
+            <div id="publish-captions"><p style="color:var(--muted);font-size:13px;padding:10px 0">Selecciona contenido para ver los captions</p></div>
+            <div class="social-buttons">
+              <a class="social-btn social-btn-ig" href="https://www.instagram.com/" target="_blank">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                Instagram
+              </a>
+              <a class="social-btn social-btn-tt" href="https://www.tiktok.com/upload" target="_blank">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.21a8.16 8.16 0 004.77 1.52V7.28a4.85 4.85 0 01-1-.59z"/></svg>
+                TikTok
+              </a>
+              <a class="social-btn social-btn-yt" href="https://studio.youtube.com/channel/upload" target="_blank">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                YouTube
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="estudio-right">
+          <div class="estudio-card">
+            <div class="estudio-card-title">📜 Teleprónter</div>
+            <div class="teleprompter-area" id="teleprompter-area">
+              <div class="teleprompter-text" id="teleprompter-text">Selecciona un contenido para ver el guión aquí...</div>
+            </div>
+            <div class="teleprompter-controls">
+              <button class="tp-btn" id="tp-play-btn" onclick="toggleTeleprompter()">▶ Auto-scroll</button>
+              <div class="tp-speed">Velocidad: <input type="range" id="tp-speed" min="10" max="100" value="30" oninput="actualizarVelocidadTP()"></div>
+              <button class="tp-btn" onclick="resetTeleprompter()">↩ Inicio</button>
+            </div>
+          </div>
+          <div class="estudio-card">
+            <div class="estudio-card-title">📋 Captions y Hashtags</div>
+            <div id="estudio-captions"><p style="color:var(--muted);font-size:13px;padding:10px 0">Selecciona contenido para ver los captions</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB PLANNER -->
+    <div id="tab-planner">
+      <div class="section-title">📆 <span>Planner</span></div>
+      <div class="calendar-header">
+        <button class="calendar-nav-btn" onclick="navegarMes(-1)">&#8249;</button>
+        <div class="calendar-month" id="calendar-month-label"></div>
+        <button class="calendar-nav-btn" onclick="navegarMes(1)">&#8250;</button>
+      </div>
+      <div class="calendar-grid" id="calendar-grid"></div>
+      <div class="planner-list">
+        <div class="planner-list-title" id="planner-list-title">Posts programados este mes</div>
+        <div id="planner-list-items"></div>
+      </div>
+    </div>
+
+    <!-- TAB HISTORIAL -->
     <div id="tab-historial">
       <div class="section-title">Tu <span>historial</span></div>
       <div class="filtros">
-        <button class="filtro-btn active" onclick="filtrar('todo',this)">Todos</button>
-        <button class="filtro-btn" onclick="filtrar('naiqo',this)">Naiqo</button>
-        <button class="filtro-btn" onclick="filtrar('ollotechs',this)">Ollotechs</button>
-        <button class="filtro-btn" onclick="filtrar('idea',this)">Idea</button>
-        <button class="filtro-btn" onclick="filtrar('guion',this)">Guion</button>
-        <button class="filtro-btn" onclick="filtrar('grabado',this)">Grabado</button>
-        <button class="filtro-btn" onclick="filtrar('publicado',this)">Publicado</button>
+        <button class="filtro-btn active" onclick="filtrar('todo', this)">Todos</button>
+        <button class="filtro-btn" onclick="filtrar('naiqo', this)">Naiqo</button>
+        <button class="filtro-btn" onclick="filtrar('ollotechs', this)">Ollotechs</button>
+        <button class="filtro-btn" onclick="filtrar('idea', this)">💡 Idea</button>
+        <button class="filtro-btn" onclick="filtrar('guion', this)">📝 Guión</button>
+        <button class="filtro-btn" onclick="filtrar('grabado', this)">🎬 Grabado</button>
+        <button class="filtro-btn" onclick="filtrar('publicado', this)">✅ Publicado</button>
       </div>
       <div id="historial-lista"></div>
     </div>
   </main>
+
   <nav class="mobile-nav">
-    <button class="mobile-nav-btn active" onclick="showTab('generar',this,true)"><span class="nav-icon">&#10024;</span>Generar</button>
-    <button class="mobile-nav-btn" onclick="showTab('historial',this,true)"><span class="nav-icon">&#x1F4CB;</span>Historial</button>
+    <button class="mobile-nav-btn active" onclick="showTab('generar', this, true)"><span class="nav-icon">✨</span>Generar</button>
+    <button class="mobile-nav-btn" onclick="showTab('estudio', this, true)"><span class="nav-icon">🎥</span>Estudio</button>
+    <button class="mobile-nav-btn" onclick="showTab('planner', this, true)"><span class="nav-icon">📆</span>Planner</button>
+    <button class="mobile-nav-btn" onclick="showTab('historial', this, true)"><span class="nav-icon">📋</span>Historial</button>
   </nav>
 </div>
+
+<!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
   <div class="modal-card">
     <div class="modal-header">
       <div class="resultado-titulo" id="modal-titulo"></div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <button class="delete-btn" onclick="eliminarDesdeModal()">Eliminar</button>
-        <button class="modal-close" onclick="document.getElementById('modal-overlay').classList.remove('open')">x</button>
+      <div class="modal-actions">
+        <button class="btn-edit-modal" id="btn-edit-modal" onclick="toggleEditModal()">✏️ Editar</button>
+        <button class="btn-save-modal" id="btn-save-modal" onclick="guardarEdicion()">💾 Guardar</button>
+        <button class="cam-btn cam-btn-primary" style="padding:8px 14px;font-size:13px" onclick="abrirEnEstudio()">🎥 Grabar</button>
+        <button class="delete-btn" onclick="eliminarDesdeModal()">🗑</button>
+        <button class="modal-close" onclick="document.getElementById('modal-overlay').classList.remove('open')">×</button>
       </div>
     </div>
     <div id="modal-content"></div>
   </div>
 </div>
 <script>
-  var selectedBrand=null,selectedFormato=null,currentContent=null,filtroActual='todo',modalItemId=null;
-  var historial=JSON.parse(localStorage.getItem('naiqo_historial')||'[]');
-  var savedPassword=localStorage.getItem('naiqo_pass')||'';
-  function login(){var p=document.getElementById('password-input').value;if(!p)return;savedPassword=p;localStorage.setItem('naiqo_pass',p);document.getElementById('login-screen').style.display='none';document.getElementById('app').style.display='block';renderHistorial();}
-  if(savedPassword){document.getElementById('login-screen').style.display='none';document.getElementById('app').style.display='block';renderHistorial();}
-  document.getElementById('password-input').addEventListener('keydown',function(e){if(e.key==='Enter')login();});
-  function showTab(tab,btn,mobile){document.getElementById('tab-generar').style.display=tab==='generar'?'block':'none';document.getElementById('tab-historial').style.display=tab==='historial'?'block':'none';if(mobile){document.querySelectorAll('.mobile-nav-btn').forEach(function(b){b.classList.remove('active')});}else{document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});}btn.classList.add('active');if(tab==='historial')renderHistorial();}
-  function selectBrand(b){selectedBrand=b;document.querySelectorAll('.brand-btn').forEach(function(x){x.classList.remove('selected')});document.querySelector('[data-brand="'+b+'"]').classList.add('selected');}
-  function selectFormato(f){selectedFormato=f;document.querySelectorAll('.format-btn').forEach(function(x){x.classList.remove('selected')});document.querySelector('[data-formato="'+f+'"]').classList.add('selected');}
-  async function generar(){
-    var idea=document.getElementById('idea-input').value.trim();
-    if(!selectedBrand){alert('Elige una marca');return;}
-    if(!selectedFormato){alert('Elige un formato');return;}
-    if(!idea){alert('Escribe tu idea');return;}
-    var btn=document.getElementById('btn-generate');
-    btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Generando...';
-    document.getElementById('resultado').style.display='none';
-    try{
-      var res=await fetch('/api/generar',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({marca:selectedBrand,formato:selectedFormato,idea:idea,password:savedPassword})});
-      var data=await res.json();
-      if(!data.ok){if(res.status===401){alert('Contrasena incorrecta');localStorage.removeItem('naiqo_pass');}else{alert('Error: '+data.error);}return;}
-      currentContent=data.content;mostrarResultado(data.content);
-    }catch(e){alert('Error: '+e.message);}
-    finally{btn.disabled=false;btn.innerHTML='Generar contenido';}
+  let selectedBrand = null, selectedFormato = null, currentContent = null;
+  let historial = JSON.parse(localStorage.getItem('naiqo_historial') || '[]');
+  let filtroActual = 'todo', modalItemId = null, isEditingModal = false;
+  let savedPassword = localStorage.getItem('naiqo_pass') || '';
+  let estudioItemId = null;
+  let mediaStream = null, mediaRecorder = null, recordedChunks = [], recordingBlob = null;
+  let recTimerInterval = null, recSeconds = 0;
+  let tpInterval = null, tpRunning = false;
+  let calYear = new Date().getFullYear(), calMonth = new Date().getMonth();
+
+  function login() {
+    const pwd = document.getElementById('password-input').value;
+    if (!pwd) return;
+    savedPassword = pwd;
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    localStorage.setItem('naiqo_pass', pwd);
+    renderHistorial(); renderCalendar();
   }
-  function mostrarResultado(c){
-    document.getElementById('resultado-titulo').textContent=c.titulo_contenido||'Contenido generado';
-    var badge=document.getElementById('resultado-marca-badge');badge.textContent=c.marca==='naiqo'?'NAIQO':'OLLOTECHS';badge.className='marca-badge '+c.marca;
-    document.getElementById('resultado-gancho').textContent=c.gancho;
-    document.getElementById('resultado-guion').textContent=c.guion;
-    document.getElementById('resultado-ig').textContent=c.caption_ig;
-    document.getElementById('resultado-tiktok').textContent=c.caption_tiktok;
-    document.getElementById('resultado-hashtags').textContent=c.hashtags;
-    document.getElementById('btn-guardar').textContent='Guardar en historial';
-    document.getElementById('btn-guardar').className='btn-guardar';
-    document.getElementById('resultado').style.display='block';
-    document.getElementById('resultado').scrollIntoView({behavior:'smooth',block:'start'});
+
+  if (savedPassword) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    renderHistorial(); renderCalendar();
   }
-  function copiar(id,btn){navigator.clipboard.writeText(document.getElementById(id).textContent).then(function(){btn.textContent='Copiado';btn.classList.add('copied');setTimeout(function(){btn.textContent='Copiar';btn.classList.remove('copied');},2000);});}
-  function guardarEnHistorial(){if(!currentContent)return;if(!historial.find(function(h){return h.id===currentContent.id;})){historial.unshift(Object.assign({},currentContent,{estado:'idea'}));}localStorage.setItem('naiqo_historial',JSON.stringify(historial));var btn=document.getElementById('btn-guardar');btn.textContent='Guardado';btn.classList.add('guardado');}
-  var ESTADOS=[{key:'idea',label:'Idea',cls:'active-idea'},{key:'guion',label:'Guion listo',cls:'active-guion'},{key:'grabado',label:'Grabado',cls:'active-grabado'},{key:'publicado',label:'Publicado',cls:'active-publicado'}];
-  function renderHistorial(){
-    var lista=document.getElementById('historial-lista');
-    var items=historial.slice();
-    if(filtroActual==='naiqo')items=items.filter(function(i){return i.marca==='naiqo';});
-    else if(filtroActual==='ollotechs')items=items.filter(function(i){return i.marca==='ollotechs';});
-    else if(['idea','guion','grabado','publicado'].indexOf(filtroActual)>=0)items=items.filter(function(i){return i.estado===filtroActual;});
-    if(items.length===0){lista.innerHTML='<div class="empty-state"><div class="empty-icon">&#x1F4ED;</div><p>No hay contenido guardado todavia</p></div>';return;}
-    var eClasses={idea:'estado-idea',guion:'estado-guion',grabado:'estado-grabado',publicado:'estado-publicado'};
-    var eLabels={idea:'Idea',guion:'Guion',grabado:'Grabado',publicado:'Publicado'};
-    lista.innerHTML=items.map(function(item){
-      var fecha=new Date(item.fecha).toLocaleDateString('es-ES',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
-      var eBtns=ESTADOS.map(function(e){return '<button class="estado-btn '+(item.estado===e.key?e.cls:'')+'" onclick="cambiarEstado('+item.id+',\''+e.key+'\',event)">'+e.label+'</button>';}).join('');
-      return '<div class="historia-item" onclick="abrirDetalle('+item.id+')"><div class="historia-item-header"><div><span class="marca-badge '+item.marca+'" style="margin-bottom:6px;display:inline-block">'+item.marca.toUpperCase()+'</span><div class="historia-titulo">'+(item.titulo_contenido||item.idea)+'</div></div><span class="estado-badge '+(eClasses[item.estado]||'estado-idea')+'">'+(eLabels[item.estado]||item.estado)+'</span></div><div class="historia-gancho">"'+item.gancho+'"</div><div class="historia-footer"><span class="historia-fecha">'+fecha+'</span><div class="estado-selector" onclick="event.stopPropagation()">'+eBtns+'</div></div></div>';
+
+  document.getElementById('password-input').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+
+  const TABS = ['generar', 'estudio', 'planner', 'historial'];
+
+  function showTab(tab, btn, mobile = false) {
+    TABS.forEach(t => { const el = document.getElementById('tab-' + t); if (el) el.style.display = t === tab ? 'block' : 'none'; });
+    if (mobile) document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
+    else document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    if (tab === 'historial') renderHistorial();
+    if (tab === 'planner') renderCalendar();
+    if (tab === 'estudio') renderEstudio();
+  }
+
+  function selectBrand(brand) {
+    selectedBrand = brand;
+    document.querySelectorAll('.brand-btn').forEach(b => b.classList.remove('selected'));
+    document.querySelector('[data-brand="' + brand + '"]').classList.add('selected');
+  }
+
+  function selectFormato(formato) {
+    selectedFormato = formato;
+    document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('selected'));
+    document.querySelector('[data-formato="' + formato + '"]').classList.add('selected');
+  }
+
+  async function generar() {
+    const idea = document.getElementById('idea-input').value.trim();
+    if (!selectedBrand) { alert('Elige una marca primero'); return; }
+    if (!selectedFormato) { alert('Elige un formato primero'); return; }
+    if (!idea) { alert('Escribe tu idea'); return; }
+    const btn = document.getElementById('btn-generate');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Generando...';
+    document.getElementById('resultado').style.display = 'none';
+    try {
+      const res = await fetch('/api/generar', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ marca: selectedBrand, formato: selectedFormato, idea, password: savedPassword })
+      });
+      const data = await res.json();
+      if (!data.ok) {
+        if (res.status === 401) { alert('Contraseña incorrecta. Recarga la página.'); localStorage.removeItem('naiqo_pass'); }
+        else alert('Error: ' + data.error);
+        return;
+      }
+      currentContent = data.content;
+      mostrarResultado(data.content);
+    } catch (e) { alert('Error de conexión: ' + e.message); }
+    finally { btn.disabled = false; btn.innerHTML = '✨ Generar contenido'; }
+  }
+
+  function mostrarResultado(c) {
+    document.getElementById('resultado-titulo').textContent = c.titulo_contenido || 'Contenido generado';
+    const badge = document.getElementById('resultado-marca-badge');
+    badge.textContent = c.marca === 'naiqo' ? 'NAIQO' : 'OLLOTECHS';
+    badge.className = 'marca-badge ' + c.marca;
+    document.getElementById('resultado-gancho').textContent = c.gancho;
+    document.getElementById('resultado-guion').textContent = c.guion;
+    document.getElementById('resultado-ig').textContent = c.caption_ig;
+    document.getElementById('resultado-tiktok').textContent = c.caption_tiktok;
+    document.getElementById('resultado-hashtags').textContent = c.hashtags;
+    document.getElementById('btn-guardar').textContent = '💾 Guardar en historial';
+    document.getElementById('btn-guardar').className = 'btn-guardar';
+    document.getElementById('btn-ir-estudio').style.display = 'none';
+    document.getElementById('resultado').style.display = 'block';
+    document.getElementById('resultado').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function copiar(elementId, btn) {
+    const el = document.getElementById(elementId);
+    const text = el ? el.textContent : '';
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.textContent; btn.textContent = '✅ Copiado'; btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  function guardarEnHistorial() {
+    if (!currentContent) return;
+    if (!historial.find(h => h.id === currentContent.id)) {
+      historial.unshift({ ...currentContent, estado: 'idea', fechaPublicacion: '' });
+      localStorage.setItem('naiqo_historial', JSON.stringify(historial));
+    }
+    const btn = document.getElementById('btn-guardar');
+    btn.textContent = '✅ Guardado en historial'; btn.classList.add('guardado');
+    document.getElementById('btn-ir-estudio').style.display = 'block';
+  }
+
+  function irAlEstudio() {
+    if (!currentContent) return;
+    cargarEnEstudio(currentContent.id);
+    showTab('estudio', document.querySelector('.tab-btn[onclick*="estudio"]'));
+  }
+
+  const ESTADOS = [
+    { key: 'idea', label: '💡 Idea', cls: 'active-idea' },
+    { key: 'guion', label: '📝 Guión', cls: 'active-guion' },
+    { key: 'grabado', label: '🎬 Grabado', cls: 'active-grabado' },
+    { key: 'publicado', label: '✅ Publicado', cls: 'active-publicado' }
+  ];
+
+  function renderHistorial() {
+    const lista = document.getElementById('historial-lista');
+    let items = [...historial];
+    if (filtroActual === 'naiqo') items = items.filter(i => i.marca === 'naiqo');
+    else if (filtroActual === 'ollotechs') items = items.filter(i => i.marca === 'ollotechs');
+    else if (['idea','guion','grabado','publicado'].includes(filtroActual)) items = items.filter(i => i.estado === filtroActual);
+
+    if (items.length === 0) {
+      lista.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>No hay contenido guardado todavía</p></div>';
+      return;
+    }
+
+    lista.innerHTML = items.map(item => {
+      const eClass = { idea:'estado-idea', guion:'estado-guion', grabado:'estado-grabado', publicado:'estado-publicado' }[item.estado] || 'estado-idea';
+      const eLabel = { idea:'💡 Idea', guion:'📝 Guión', grabado:'🎬 Grabado', publicado:'✅ Publicado' }[item.estado] || item.estado;
+      const fecha = new Date(item.fecha).toLocaleDateString('es-ES', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' });
+      const fechaPub = item.fechaPublicacion ? '<span class="historia-fecha-pub">📅 ' + new Date(item.fechaPublicacion + 'T12:00:00').toLocaleDateString('es-ES', { day:'numeric', month:'short' }) + '</span>' : '';
+      const estadoBtns = ESTADOS.map(e => '<button class="estado-btn ' + (item.estado === e.key ? e.cls : '') + '" onclick="cambiarEstado(' + item.id + ', \'' + e.key + '\', event)">' + e.label + '</button>').join('');
+      return '<div class="historia-item" onclick="abrirDetalle(' + item.id + ')">' +
+        '<div class="historia-item-header"><div><span class="marca-badge ' + item.marca + '" style="margin-bottom:6px;display:inline-block">' + item.marca.toUpperCase() + '</span><div class="historia-titulo">' + (item.titulo_contenido || item.idea) + '</div></div><span class="estado-badge ' + eClass + '">' + eLabel + '</span></div>' +
+        '<div class="historia-gancho">"' + (item.gancho || '') + '"</div>' +
+        '<div class="historia-footer"><div><div class="historia-fecha">' + fecha + '</div>' + fechaPub + '</div><div class="estado-selector" onclick="event.stopPropagation()">' + estadoBtns + '</div></div></div>';
     }).join('');
   }
-  function cambiarEstado(id,estado,event){event.stopPropagation();var item=historial.find(function(h){return h.id===id;});if(item){item.estado=estado;localStorage.setItem('naiqo_historial',JSON.stringify(historial));renderHistorial();}}
-  function filtrar(tipo,btn){filtroActual=tipo;document.querySelectorAll('.filtro-btn').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');renderHistorial();}
-  function abrirDetalle(id){
-    var item=historial.find(function(h){return h.id===id;});if(!item)return;modalItemId=id;
-    document.getElementById('modal-titulo').textContent=item.titulo_contenido||item.idea;
-    function blk(label,text,bid){return '<div class="content-block"><div class="block-header"><span class="block-label">'+label+'</span><button class="copy-btn" onclick="copiar(\''+bid+'\',this)">Copiar</button></div><div class="block-text" id="'+bid+'">'+text+'</div></div>';}
-    document.getElementById('modal-content').innerHTML='<div class="gancho-box" style="margin-bottom:16px"><div class="gancho-label">Gancho</div><div class="gancho-text">'+item.gancho+'</div></div>'+blk('Guion',item.guion,'modal-guion')+blk('Caption Instagram',item.caption_ig,'modal-ig')+blk('Caption TikTok',item.caption_tiktok,'modal-tiktok')+'<div class="content-block"><div class="block-header"><span class="block-label">Hashtags</span><button class="copy-btn" onclick="copiar(\'modal-hashtags\',this)">Copiar</button></div><div class="hashtags-text" id="modal-hashtags">'+item.hashtags+'</div></div>';
+
+  function cambiarEstado(id, estado, event) {
+    event.stopPropagation();
+    const item = historial.find(h => h.id === id);
+    if (item) { item.estado = estado; localStorage.setItem('naiqo_historial', JSON.stringify(historial)); renderHistorial(); }
+  }
+
+  function filtrar(tipo, btn) {
+    filtroActual = tipo;
+    document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active'); renderHistorial();
+  }
+
+  function esc(str) {
+    if (!str) return '';
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function abrirDetalle(id) {
+    const item = historial.find(h => h.id === id);
+    if (!item) return;
+    modalItemId = id; isEditingModal = false;
+    document.getElementById('modal-titulo').textContent = item.titulo_contenido || item.idea;
+    document.getElementById('btn-edit-modal').textContent = '✏️ Editar';
+    document.getElementById('btn-edit-modal').classList.remove('editing');
+    document.getElementById('btn-save-modal').style.display = 'none';
+    document.getElementById('modal-content').innerHTML =
+      '<div class="fecha-pub-row"><label>📅 Fecha publicación:</label><input type="date" class="fecha-pub-input" id="modal-fecha-pub" value="' + (item.fechaPublicacion || '') + '" onchange="actualizarFecha(this.value)"></div>' +
+      '<div id="modal-edit-area">' +
+        '<div class="gancho-box" style="margin-bottom:16px"><div class="gancho-label">🎣 Gancho</div><div class="gancho-text editable-field" id="modal-gancho" contenteditable="false">' + esc(item.gancho) + '</div></div>' +
+        bloqueEditable('🎬 Guión del vídeo', item.guion, 'modal-guion') +
+        bloqueEditable('📸 Caption Instagram', item.caption_ig, 'modal-ig') +
+        bloqueEditable('🎵 Caption TikTok', item.caption_tiktok, 'modal-tiktok') +
+        '<div class="content-block"><div class="block-header"><span class="block-label"># Hashtags</span><button class="copy-btn" onclick="copiar(\'modal-hashtags\', this)">Copiar</button></div><div class="hashtags-text editable-field" id="modal-hashtags" contenteditable="false">' + esc(item.hashtags) + '</div></div>' +
+        '<button class="btn-estudio" onclick="abrirEnEstudio()">🎥 Grabar este contenido en el Estudio</button>' +
+      '</div>';
     document.getElementById('modal-overlay').classList.add('open');
   }
-  function closeModal(e){if(e.target===document.getElementById('modal-overlay'))document.getElementById('modal-overlay').classList.remove('open');}
-  function eliminarDesdeModal(){if(!modalItemId)return;if(!confirm('Eliminar?'))return;historial=historial.filter(function(h){return h.id!==modalItemId;});localStorage.setItem('naiqo_historial',JSON.stringify(historial));document.getElementById('modal-overlay').classList.remove('open');renderHistorial();}
+
+  function bloqueEditable(label, text, id) {
+    return '<div class="content-block"><div class="block-header"><span class="block-label">' + label + '</span><button class="copy-btn" onclick="copiar(\'' + id + '\', this)">Copiar</button></div><div class="block-text editable-field" id="' + id + '" contenteditable="false">' + esc(text) + '</div></div>';
+  }
+
+  function toggleEditModal() {
+    isEditingModal = !isEditingModal;
+    const area = document.getElementById('modal-edit-area');
+    const fields = area.querySelectorAll('.editable-field');
+    const btn = document.getElementById('btn-edit-modal');
+    const saveBtn = document.getElementById('btn-save-modal');
+    if (isEditingModal) {
+      fields.forEach(f => { f.contentEditable = 'true'; });
+      area.classList.add('edit-mode'); btn.textContent = '✏️ Editando...'; btn.classList.add('editing'); saveBtn.style.display = 'inline-block';
+    } else {
+      fields.forEach(f => { f.contentEditable = 'false'; });
+      area.classList.remove('edit-mode'); btn.textContent = '✏️ Editar'; btn.classList.remove('editing'); saveBtn.style.display = 'none';
+    }
+  }
+
+  function guardarEdicion() {
+    const item = historial.find(h => h.id === modalItemId);
+    if (!item) return;
+    const g = document.getElementById('modal-gancho');
+    const guion = document.getElementById('modal-guion');
+    const ig = document.getElementById('modal-ig');
+    const tt = document.getElementById('modal-tiktok');
+    const ht = document.getElementById('modal-hashtags');
+    if (g) item.gancho = g.innerText;
+    if (guion) item.guion = guion.innerText;
+    if (ig) item.caption_ig = ig.innerText;
+    if (tt) item.caption_tiktok = tt.innerText;
+    if (ht) item.hashtags = ht.innerText;
+    localStorage.setItem('naiqo_historial', JSON.stringify(historial));
+    const saveBtn = document.getElementById('btn-save-modal');
+    saveBtn.textContent = '✅ Guardado';
+    setTimeout(() => { saveBtn.textContent = '💾 Guardar'; }, 2000);
+    toggleEditModal(); renderHistorial();
+  }
+
+  function actualizarFecha(val) {
+    const item = historial.find(h => h.id === modalItemId);
+    if (item) { item.fechaPublicacion = val; localStorage.setItem('naiqo_historial', JSON.stringify(historial)); renderHistorial(); renderCalendar(); }
+  }
+
+  function closeModal(event) {
+    if (event.target === document.getElementById('modal-overlay')) document.getElementById('modal-overlay').classList.remove('open');
+  }
+
+  function eliminarDesdeModal() {
+    if (!modalItemId || !confirm('¿Eliminar este contenido?')) return;
+    historial = historial.filter(h => h.id !== modalItemId);
+    localStorage.setItem('naiqo_historial', JSON.stringify(historial));
+    document.getElementById('modal-overlay').classList.remove('open');
+    renderHistorial(); renderCalendar();
+  }
+
+  function abrirEnEstudio() {
+    if (!modalItemId) return;
+    document.getElementById('modal-overlay').classList.remove('open');
+    cargarEnEstudio(modalItemId);
+    showTab('estudio', document.querySelector('.tab-btn[onclick*="estudio"]'));
+  }
+
+  function renderEstudio() { if (estudioItemId) cargarEnEstudio(estudioItemId); }
+
+  function cargarEnEstudio(id) {
+    const item = historial.find(h => h.id === id);
+    if (!item) return;
+    estudioItemId = id;
+    document.getElementById('estudio-gancho-text').textContent = item.gancho || '';
+    document.getElementById('estudio-meta').innerHTML =
+      '<span class="marca-badge ' + item.marca + '">' + item.marca.toUpperCase() + '</span>' +
+      '<span class="estado-badge estado-' + (item.estado||'idea') + '">' + ({idea:'💡 Idea',guion:'📝 Guión',grabado:'🎬 Grabado',publicado:'✅ Publicado'}[item.estado]||item.estado) + '</span>';
+    document.getElementById('estudio-content-info').style.display = 'block';
+    document.getElementById('estudio-select-prompt').style.display = 'none';
+    document.getElementById('teleprompter-text').textContent = item.guion || 'Sin guión disponible.';
+    resetTeleprompter();
+    document.getElementById('estudio-captions').innerHTML =
+      captionBlock('📸 Caption Instagram', item.caption_ig, 'ec-ig') +
+      captionBlock('🎵 Caption TikTok', item.caption_tiktok, 'ec-tt') +
+      captionBlock('# Hashtags', item.hashtags, 'ec-ht');
+    document.getElementById('publish-captions').innerHTML =
+      captionBlock('📸 Caption Instagram', item.caption_ig, 'pc-ig') +
+      captionBlock('🎵 Caption TikTok', item.caption_tiktok, 'pc-tt');
+  }
+
+  function captionBlock(label, text, id) {
+    return '<div class="publish-caption-block"><div class="publish-caption-header"><span class="publish-caption-label">' + label + '</span><button class="copy-btn" onclick="copiarTexto(\'' + id + '\', this)">Copiar</button></div><div class="publish-caption-text" id="' + id + '">' + esc(text) + '</div></div>';
+  }
+
+  function copiarTexto(id, btn) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    navigator.clipboard.writeText(el.textContent).then(() => {
+      const orig = btn.textContent; btn.textContent = '✅'; btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  function limpiarContenidoEstudio() {
+    estudioItemId = null;
+    document.getElementById('estudio-content-info').style.display = 'none';
+    document.getElementById('estudio-select-prompt').style.display = 'block';
+    document.getElementById('teleprompter-text').textContent = 'Selecciona un contenido para ver el guión aquí...';
+    document.getElementById('estudio-captions').innerHTML = '<p style="color:var(--muted);font-size:13px;padding:10px 0">Selecciona contenido para ver los captions</p>';
+    document.getElementById('publish-captions').innerHTML = '<p style="color:var(--muted);font-size:13px;padding:10px 0">Selecciona contenido para ver los captions</p>';
+    stopTeleprompter();
+  }
+
+  async function activarCamara() {
+    try {
+      mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: true });
+      const preview = document.getElementById('camera-preview');
+      preview.srcObject = mediaStream; preview.style.display = 'block';
+      document.getElementById('camera-placeholder').style.display = 'none';
+      document.getElementById('btn-camera').disabled = true;
+      document.getElementById('btn-record').disabled = false;
+      document.getElementById('playback-video').style.display = 'none';
+      document.getElementById('download-area').style.display = 'none';
+    } catch (err) { alert('No se pudo acceder a la cámara: ' + err.message + '\n\nAsegúrate de dar permiso al navegador.'); }
+  }
+
+  function iniciarGrabacion() {
+    if (!mediaStream) return;
+    recordedChunks = []; recordingBlob = null;
+    const mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm';
+    mediaRecorder = new MediaRecorder(mediaStream, { mimeType });
+    mediaRecorder.ondataavailable = e => { if (e.data.size > 0) recordedChunks.push(e.data); };
+    mediaRecorder.onstop = () => {
+      recordingBlob = new Blob(recordedChunks, { type: 'video/webm' });
+      const url = URL.createObjectURL(recordingBlob);
+      const playback = document.getElementById('playback-video');
+      playback.src = url; playback.style.display = 'block';
+      document.getElementById('camera-preview').style.display = 'none';
+      document.getElementById('download-area').style.display = 'block';
+      const item = historial.find(h => h.id === estudioItemId);
+      if (item && item.estado === 'idea') { item.estado = 'grabado'; localStorage.setItem('naiqo_historial', JSON.stringify(historial)); renderHistorial(); }
+    };
+    mediaRecorder.start(100);
+    document.getElementById('btn-record').style.display = 'none';
+    document.getElementById('btn-stop').style.display = 'inline-flex';
+    document.getElementById('btn-camera').disabled = true;
+    document.getElementById('rec-indicator').style.display = 'flex';
+    document.getElementById('rec-timer').style.display = 'block';
+    recSeconds = 0; actualizarTimer();
+    recTimerInterval = setInterval(actualizarTimer, 1000);
+  }
+
+  function actualizarTimer() {
+    recSeconds++;
+    const m = Math.floor(recSeconds / 60), s = recSeconds % 60;
+    document.getElementById('rec-timer').textContent = m + ':' + String(s).padStart(2, '0');
+  }
+
+  function detenerGrabacion() {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+    clearInterval(recTimerInterval);
+    document.getElementById('btn-stop').style.display = 'none';
+    document.getElementById('btn-record').style.display = 'inline-flex';
+    document.getElementById('btn-record').textContent = '⏺ Grabar de nuevo';
+    document.getElementById('rec-indicator').style.display = 'none';
+    document.getElementById('rec-timer').style.display = 'none';
+  }
+
+  function descargarVideo() {
+    if (!recordingBlob) return;
+    const a = document.createElement('a');
+    const item = historial.find(h => h.id === estudioItemId);
+    const nombre = (item ? item.titulo_contenido || 'video' : 'video').replace(/[^a-z0-9]/gi, '_').toLowerCase();
+    a.href = URL.createObjectURL(recordingBlob);
+    a.download = nombre + '_' + new Date().toISOString().slice(0,10) + '.webm';
+    a.click();
+  }
+
+  function toggleTeleprompter() { tpRunning ? stopTeleprompter() : startTeleprompter(); }
+
+  function startTeleprompter() {
+    tpRunning = true;
+    document.getElementById('tp-play-btn').textContent = '⏸ Pausar';
+    document.getElementById('tp-play-btn').classList.add('active');
+    const area = document.getElementById('teleprompter-area');
+    const speed = parseInt(document.getElementById('tp-speed').value);
+    tpInterval = setInterval(() => { area.scrollTop += speed / 60; }, 16);
+  }
+
+  function stopTeleprompter() {
+    tpRunning = false; clearInterval(tpInterval);
+    document.getElementById('tp-play-btn').textContent = '▶ Auto-scroll';
+    document.getElementById('tp-play-btn').classList.remove('active');
+  }
+
+  function resetTeleprompter() { stopTeleprompter(); document.getElementById('teleprompter-area').scrollTop = 0; }
+  function actualizarVelocidadTP() { if (tpRunning) { stopTeleprompter(); startTeleprompter(); } }
+
+  const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const DIAS = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+
+  function navegarMes(delta) {
+    calMonth += delta;
+    if (calMonth > 11) { calMonth = 0; calYear++; }
+    if (calMonth < 0) { calMonth = 11; calYear--; }
+    renderCalendar();
+  }
+
+  function renderCalendar() {
+    const label = document.getElementById('calendar-month-label');
+    if (!label) return;
+    label.textContent = MESES[calMonth] + ' ' + calYear;
+    const grid = document.getElementById('calendar-grid');
+    const today = new Date();
+    let html = DIAS.map(d => '<div class="cal-day-header">' + d + '</div>').join('');
+    const firstDay = new Date(calYear, calMonth, 1);
+    let startDow = firstDay.getDay();
+    startDow = startDow === 0 ? 6 : startDow - 1;
+    const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+    const daysInPrevMonth = new Date(calYear, calMonth, 0).getDate();
+    const postsByDate = {};
+    historial.forEach(item => {
+      if (item.fechaPublicacion) {
+        if (!postsByDate[item.fechaPublicacion]) postsByDate[item.fechaPublicacion] = [];
+        postsByDate[item.fechaPublicacion].push(item);
+      }
+    });
+    for (let i = startDow - 1; i >= 0; i--) html += '<div class="cal-day other-month"><div class="cal-day-number">' + (daysInPrevMonth - i) + '</div></div>';
+    for (let d = 1; d <= daysInMonth; d++) {
+      const isToday = today.getFullYear() === calYear && today.getMonth() === calMonth && today.getDate() === d;
+      const dateStr = calYear + '-' + String(calMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+      const posts = postsByDate[dateStr] || [];
+      const postHtml = posts.slice(0,3).map(p => '<div class="cal-post ' + p.marca + '" onclick="event.stopPropagation();abrirDetalle(' + p.id + ')">' + (p.titulo_contenido || p.idea || '').substring(0,18) + '</div>').join('');
+      html += '<div class="cal-day' + (isToday ? ' today' : '') + '"><div class="cal-day-number">' + d + '</div>' + postHtml + '</div>';
+    }
+    const totalCells = Math.ceil((startDow + daysInMonth) / 7) * 7;
+    for (let d = 1; d <= totalCells - startDow - daysInMonth; d++) html += '<div class="cal-day other-month"><div class="cal-day-number">' + d + '</div></div>';
+    grid.innerHTML = html;
+
+    const mesItems = historial.filter(item => {
+      if (!item.fechaPublicacion) return false;
+      const [y, m] = item.fechaPublicacion.split('-').map(Number);
+      return y === calYear && m === calMonth + 1;
+    }).sort((a,b) => a.fechaPublicacion.localeCompare(b.fechaPublicacion));
+
+    const listEl = document.getElementById('planner-list-items');
+    const titleEl = document.getElementById('planner-list-title');
+    if (titleEl) titleEl.textContent = 'Posts programados en ' + MESES[calMonth] + ' (' + mesItems.length + ')';
+    if (!listEl) return;
+    if (mesItems.length === 0) {
+      listEl.innerHTML = '<div class="empty-state" style="padding:30px 20px"><div class="empty-icon">📅</div><p>Sin posts programados este mes</p></div>';
+    } else {
+      listEl.innerHTML = mesItems.map(item => {
+        const fecha = new Date(item.fechaPublicacion + 'T12:00:00').toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
+        const eLabel = {idea:'💡 Idea',guion:'📝 Guión',grabado:'🎬 Grabado',publicado:'✅ Publicado'}[item.estado] || item.estado;
+        const eClass = {idea:'estado-idea',guion:'estado-guion',grabado:'estado-grabado',publicado:'estado-publicado'}[item.estado] || 'estado-idea';
+        return '<div class="historia-item" onclick="abrirDetalle(' + item.id + ')"><div class="historia-item-header"><div><span class="marca-badge ' + item.marca + '" style="margin-bottom:6px;display:inline-block">' + item.marca.toUpperCase() + '</span><div class="historia-titulo">' + (item.titulo_contenido || item.idea) + '</div></div><span class="estado-badge ' + eClass + '">' + eLabel + '</span></div><div style="font-size:13px;color:var(--purple);font-weight:600">📅 ' + fecha + '</div></div>';
+      }).join('');
+    }
+  }
 </script>
 </body>
 </html>
