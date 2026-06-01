@@ -789,14 +789,14 @@
       });
       const data = await res.json();
       if (!data.ok) {
-        if (res.status === 401) { alert('Contrase&#xC3;&#x83;&#xC2;&#xB1;a incorrecta. Recarga la p&#xC3;&#x83;&#xC2;&#xA1;gina.'); localStorage.removeItem('naiqo_pass'); }
+        if (res.status === 401) { alert('Contrase\u00C3\u0083\u00C2\u00B1a incorrecta. Recarga la p\u00C3\u0083\u00C2\u00A1gina.'); localStorage.removeItem('naiqo_pass'); }
         else alert('Error: ' + data.error);
         return;
       }
       currentContent = data.content;
       mostrarResultado(data.content);
-    } catch (e) { alert('Error de conexi&#xC3;&#x83;&#xC2;&#xB3;n: ' + e.message); }
-    finally { btn.disabled = false; btn.innerHTML = '&#xC3;&#xA2;&#xC2;&#x9C;&#xC2;&#xA8; Generar contenido'; }
+    } catch (e) { alert('Error de conexi\u00C3\u0083\u00C2\u00B3n: ' + e.message); }
+    finally { btn.disabled = false; btn.innerHTML = '\u00C3\u00A2\u00C2\u009C\u00C2\u00A8 Generar contenido'; }
   }
 
   function mostrarResultado(c) {
@@ -809,7 +809,7 @@
     document.getElementById('resultado-ig').textContent = c.caption_ig;
     document.getElementById('resultado-tiktok').textContent = c.caption_tiktok;
     document.getElementById('resultado-hashtags').textContent = c.hashtags;
-    document.getElementById('btn-guardar').textContent = '&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x92;&#xC2;&#xBE; Guardar en historial';
+    document.getElementById('btn-guardar').textContent = '\u00C3\u00B0\u00C2\u009F\u00C2\u0092\u00C2\u00BE Guardar en historial';
     document.getElementById('btn-guardar').className = 'btn-guardar';
     document.getElementById('btn-ir-estudio').style.display = 'none';
     document.getElementById('resultado').style.display = 'block';
@@ -820,7 +820,7 @@
     const el = document.getElementById(elementId);
     const text = el ? el.textContent : '';
     navigator.clipboard.writeText(text).then(() => {
-      const orig = btn.textContent; btn.textContent = '&#xC3;&#xA2;&#xC2;&#x9C;&#xC2;&#x85; Copiado'; btn.classList.add('copied');
+      const orig = btn.textContent; btn.textContent = '\u00C3\u00A2\u00C2\u009C\u00C2\u0085 Copiado'; btn.classList.add('copied');
       setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
     });
   }
@@ -832,7 +832,7 @@
       localStorage.setItem('naiqo_historial', JSON.stringify(historial));
     }
     const btn = document.getElementById('btn-guardar');
-    btn.textContent = '&#xC3;&#xA2;&#xC2;&#x9C;&#xC2;&#x85; Guardado en historial'; btn.classList.add('guardado');
+    btn.textContent = '\u00C3\u00A2\u00C2\u009C\u00C2\u0085 Guardado en historial'; btn.classList.add('guardado');
     document.getElementById('btn-ir-estudio').style.display = 'block';
   }
 
@@ -843,10 +843,10 @@
   }
 
   const ESTADOS = [
-    { key: 'idea', label: '&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x92;&#xC2;&#xA1; Idea', cls: 'active-idea' },
-    { key: 'guion', label: '&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x93;&#xC2;&#x9D; Gui&#xC3;&#x83;&#xC2;&#xB3;n', cls: 'active-guion' },
-    { key: 'grabado', label: '&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x8E;&#xC2;&#xAC; Grabado', cls: 'active-grabado' },
-    { key: 'publicado', label: '&#xC3;&#xA2;&#xC2;&#x9C;&#xC2;&#x85; Publicado', cls: 'active-publicado' }
+    { key: 'idea', label: '\u00C3\u00B0\u00C2\u009F\u00C2\u0092\u00C2\u00A1 Idea', cls: 'active-idea' },
+    { key: 'guion', label: '\u00C3\u00B0\u00C2\u009F\u00C2\u0093\u00C2\u009D Gui\u00C3\u0083\u00C2\u00B3n', cls: 'active-guion' },
+    { key: 'grabado', label: '\u00C3\u00B0\u00C2\u009F\u00C2\u008E\u00C2\u00AC Grabado', cls: 'active-grabado' },
+    { key: 'publicado', label: '\u00C3\u00A2\u00C2\u009C\u00C2\u0085 Publicado', cls: 'active-publicado' }
   ];
 
   function renderHistorial() {
@@ -857,15 +857,15 @@
     else if (['idea','guion','grabado','publicado'].includes(filtroActual)) items = items.filter(i => i.estado === filtroActual);
 
     if (items.length === 0) {
-      lista.innerHTML = '<div class="empty-state"><div class="empty-icon">&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x93;&#xC2;&#xAD;</div><p>No hay contenido guardado todav&#xC3;&#x83;&#xC2;&#xAD;a</p></div>';
+      lista.innerHTML = '<div class="empty-state"><div class="empty-icon">\u00C3\u00B0\u00C2\u009F\u00C2\u0093\u00C2\u00AD</div><p>No hay contenido guardado todav\u00C3\u0083\u00C2\u00ADa</p></div>';
       return;
     }
 
     lista.innerHTML = items.map(item => {
       const eClass = { idea:'estado-idea', guion:'estado-guion', grabado:'estado-grabado', publicado:'estado-publicado' }[item.estado] || 'estado-idea';
-      const eLabel = { idea:'&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x92;&#xC2;&#xA1; Idea', guion:'&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x93;&#xC2;&#x9D; Gui&#xC3;&#x83;&#xC2;&#xB3;n', grabado:'&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x8E;&#xC2;&#xAC; Grabado', publicado:'&#xC3;&#xA2;&#xC2;&#x9C;&#xC2;&#x85; Publicado' }[item.estado] || item.estado;
+      const eLabel = { idea:'\u00C3\u00B0\u00C2\u009F\u00C2\u0092\u00C2\u00A1 Idea', guion:'\u00C3\u00B0\u00C2\u009F\u00C2\u0093\u00C2\u009D Gui\u00C3\u0083\u00C2\u00B3n', grabado:'\u00C3\u00B0\u00C2\u009F\u00C2\u008E\u00C2\u00AC Grabado', publicado:'\u00C3\u00A2\u00C2\u009C\u00C2\u0085 Publicado' }[item.estado] || item.estado;
       const fecha = new Date(item.fecha).toLocaleDateString('es-ES', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' });
-      const fechaPub = item.fechaPublicacion ? '<span class="historia-fecha-pub">&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x93;&#xC2;&#x85; ' + new Date(item.fechaPublicacion + 'T12:00:00').toLocaleDateString('es-ES', { day:'numeric', month:'short' }) + '</span>' : '';
+      const fechaPub = item.fechaPublicacion ? '<span class="historia-fecha-pub">\u00C3\u00B0\u00C2\u009F\u00C2\u0093\u00C2\u0085 ' + new Date(item.fechaPublicacion + 'T12:00:00').toLocaleDateString('es-ES', { day:'numeric', month:'short' }) + '</span>' : '';
       const estadoBtns = ESTADOS.map(e => '<button class="estado-btn ' + (item.estado === e.key ? e.cls : '') + '" onclick="cambiarEstado(' + item.id + ', \'' + e.key + '\', event)">' + e.label + '</button>').join('');
       return '<div class="historia-item" onclick="abrirDetalle(' + item.id + ')">' +
         '<div class="historia-item-header"><div><span class="marca-badge ' + item.marca + '" style="margin-bottom:6px;display:inline-block">' + item.marca.toUpperCase() + '</span><div class="historia-titulo">' + (item.titulo_contenido || item.idea) + '</div></div><span class="estado-badge ' + eClass + '">' + eLabel + '</span></div>' +
@@ -896,18 +896,18 @@
     if (!item) return;
     modalItemId = id; isEditingModal = false;
     document.getElementById('modal-titulo').textContent = item.titulo_contenido || item.idea;
-    document.getElementById('btn-edit-modal').textContent = '&#xC3;&#xA2;&#xC2;&#x9C;&#xC2;&#x8F;&#xC3;&#xAF;&#xC2;&#xB8;&#xC2;&#x8F; Editar';
+    document.getElementById('btn-edit-modal').textContent = '\u00C3\u00A2\u00C2\u009C\u00C2\u008F\u00C3\u00AF\u00C2\u00B8\u00C2\u008F Editar';
     document.getElementById('btn-edit-modal').classList.remove('editing');
     document.getElementById('btn-save-modal').style.display = 'none';
     document.getElementById('modal-content').innerHTML =
-      '<div class="fecha-pub-row"><label>&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x93;&#xC2;&#x85; Fecha publicaci&#xC3;&#x83;&#xC2;&#xB3;n:</label><input type="date" class="fecha-pub-input" id="modal-fecha-pub" value="' + (item.fechaPublicacion || '') + '" onchange="actualizarFecha(this.value)"></div>' +
+      '<div class="fecha-pub-row"><label>\u00C3\u00B0\u00C2\u009F\u00C2\u0093\u00C2\u0085 Fecha publicaci\u00C3\u0083\u00C2\u00B3n:</label><input type="date" class="fecha-pub-input" id="modal-fecha-pub" value="' + (item.fechaPublicacion || '') + '" onchange="actualizarFecha(this.value)"></div>' +
       '<div id="modal-edit-area">' +
-        '<div class="gancho-box" style="margin-bottom:16px"><div class="gancho-label">&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x8E;&#xC2;&#xA3; Gancho</div><div class="gancho-text editable-field" id="modal-gancho" contenteditable="false">' + esc(item.gancho) + '</div></div>' +
-        bloqueEditable('&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x8E;&#xC2;&#xAC; Gui&#xC3;&#x83;&#xC2;&#xB3;n del v&#xC3;&#x83;&#xC2;&#xAD;deo', item.guion, 'modal-guion') +
-        bloqueEditable('&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x93;&#xC2;&#xB8; Caption Instagram', item.caption_ig, 'modal-ig') +
-        bloqueEditable('&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x8E;&#xC2;&#xB5; Caption TikTok', item.caption_tiktok, 'modal-tiktok') +
+        '<div class="gancho-box" style="margin-bottom:16px"><div class="gancho-label">\u00C3\u00B0\u00C2\u009F\u00C2\u008E\u00C2\u00A3 Gancho</div><div class="gancho-text editable-field" id="modal-gancho" contenteditable="false">' + esc(item.gancho) + '</div></div>' +
+        bloqueEditable('\u00C3\u00B0\u00C2\u009F\u00C2\u008E\u00C2\u00AC Gui\u00C3\u0083\u00C2\u00B3n del v\u00C3\u0083\u00C2\u00ADdeo', item.guion, 'modal-guion') +
+        bloqueEditable('\u00C3\u00B0\u00C2\u009F\u00C2\u0093\u00C2\u00B8 Caption Instagram', item.caption_ig, 'modal-ig') +
+        bloqueEditable('\u00C3\u00B0\u00C2\u009F\u00C2\u008E\u00C2\u00B5 Caption TikTok', item.caption_tiktok, 'modal-tiktok') +
         '<div class="content-block"><div class="block-header"><span class="block-label"># Hashtags</span><button class="copy-btn" onclick="copiar(\'modal-hashtags\', this)">Copiar</button></div><div class="hashtags-text editable-field" id="modal-hashtags" contenteditable="false">' + esc(item.hashtags) + '</div></div>' +
-        '<button class="btn-estudio" onclick="abrirEnEstudio()">&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x8E;&#xC2;&#xA5; Grabar este contenido en el Estudio</button>' +
+        '<button class="btn-estudio" onclick="abrirEnEstudio()">\u00C3\u00B0\u00C2\u009F\u00C2\u008E\u00C2\u00A5 Grabar este contenido en el Estudio</button>' +
       '</div>';
     document.getElementById('modal-overlay').classList.add('open');
   }
@@ -924,10 +924,10 @@
     const saveBtn = document.getElementById('btn-save-modal');
     if (isEditingModal) {
       fields.forEach(f => { f.contentEditable = 'true'; });
-      area.classList.add('edit-mode'); btn.textContent = '&#xC3;&#xA2;&#xC2;&#x9C;&#xC2;&#x8F;&#xC3;&#xAF;&#xC2;&#xB8;&#xC2;&#x8F; Editando...'; btn.classList.add('editing'); saveBtn.style.display = 'inline-block';
+      area.classList.add('edit-mode'); btn.textContent = '\u00C3\u00A2\u00C2\u009C\u00C2\u008F\u00C3\u00AF\u00C2\u00B8\u00C2\u008F Editando...'; btn.classList.add('editing'); saveBtn.style.display = 'inline-block';
     } else {
       fields.forEach(f => { f.contentEditable = 'false'; });
-      area.classList.remove('edit-mode'); btn.textContent = '&#xC3;&#xA2;&#xC2;&#x9C;&#xC2;&#x8F;&#xC3;&#xAF;&#xC2;&#xB8;&#xC2;&#x8F; Editar'; btn.classList.remove('editing'); saveBtn.style.display = 'none';
+      area.classList.remove('edit-mode'); btn.textContent = '\u00C3\u00A2\u00C2\u009C\u00C2\u008F\u00C3\u00AF\u00C2\u00B8\u00C2\u008F Editar'; btn.classList.remove('editing'); saveBtn.style.display = 'none';
     }
   }
 
@@ -946,8 +946,8 @@
     if (ht) item.hashtags = ht.innerText;
     localStorage.setItem('naiqo_historial', JSON.stringify(historial));
     const saveBtn = document.getElementById('btn-save-modal');
-    saveBtn.textContent = '&#xC3;&#xA2;&#xC2;&#x9C;&#xC2;&#x85; Guardado';
-    setTimeout(() => { saveBtn.textContent = '&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x92;&#xC2;&#xBE; Guardar'; }, 2000);
+    saveBtn.textContent = '\u00C3\u00A2\u00C2\u009C\u00C2\u0085 Guardado';
+    setTimeout(() => { saveBtn.textContent = '\u00C3\u00B0\u00C2\u009F\u00C2\u0092\u00C2\u00BE Guardar'; }, 2000);
     toggleEditModal(); renderHistorial();
   }
 
@@ -961,7 +961,7 @@
   }
 
   function eliminarDesdeModal() {
-    if (!modalItemId || !confirm('&#xC3;&#x82;&#xC2;&#xBF;Eliminar este contenido?')) return;
+    if (!modalItemId || !confirm('\u00C3\u0082\u00C2\u00BFEliminar este contenido?')) return;
     historial = historial.filter(h => h.id !== modalItemId);
     localStorage.setItem('naiqo_historial', JSON.stringify(historial));
     document.getElementById('modal-overlay').classList.remove('open');
@@ -984,18 +984,18 @@
     document.getElementById('estudio-gancho-text').textContent = item.gancho || '';
     document.getElementById('estudio-meta').innerHTML =
       '<span class="marca-badge ' + item.marca + '">' + item.marca.toUpperCase() + '</span>' +
-      '<span class="estado-badge estado-' + (item.estado||'idea') + '">' + ({idea:'&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x92;&#xC2;&#xA1; Idea',guion:'&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x93;&#xC2;&#x9D; Gui&#xC3;&#x83;&#xC2;&#xB3;n',grabado:'&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x8E;&#xC2;&#xAC; Grabado',publicado:'&#xC3;&#xA2;&#xC2;&#x9C;&#xC2;&#x85; Publicado'}[item.estado]||item.estado) + '</span>';
+      '<span class="estado-badge estado-' + (item.estado||'idea') + '">' + ({idea:'\u00C3\u00B0\u00C2\u009F\u00C2\u0092\u00C2\u00A1 Idea',guion:'\u00C3\u00B0\u00C2\u009F\u00C2\u0093\u00C2\u009D Gui\u00C3\u0083\u00C2\u00B3n',grabado:'\u00C3\u00B0\u00C2\u009F\u00C2\u008E\u00C2\u00AC Grabado',publicado:'\u00C3\u00A2\u00C2\u009C\u00C2\u0085 Publicado'}[item.estado]||item.estado) + '</span>';
     document.getElementById('estudio-content-info').style.display = 'block';
     document.getElementById('estudio-select-prompt').style.display = 'none';
-    document.getElementById('teleprompter-text').textContent = item.guion || 'Sin gui&#xC3;&#x83;&#xC2;&#xB3;n disponible.';
+    document.getElementById('teleprompter-text').textContent = item.guion || 'Sin gui\u00C3\u0083\u00C2\u00B3n disponible.';
     resetTeleprompter();
     document.getElementById('estudio-captions').innerHTML =
-      captionBlock('&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x93;&#xC2;&#xB8; Caption Instagram', item.caption_ig, 'ec-ig') +
-      captionBlock('&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x8E;&#xC2;&#xB5; Caption TikTok', item.caption_tiktok, 'ec-tt') +
+      captionBlock('\u00C3\u00B0\u00C2\u009F\u00C2\u0093\u00C2\u00B8 Caption Instagram', item.caption_ig, 'ec-ig') +
+      captionBlock('\u00C3\u00B0\u00C2\u009F\u00C2\u008E\u00C2\u00B5 Caption TikTok', item.caption_tiktok, 'ec-tt') +
       captionBlock('# Hashtags', item.hashtags, 'ec-ht');
     document.getElementById('publish-captions').innerHTML =
-      captionBlock('&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x93;&#xC2;&#xB8; Caption Instagram', item.caption_ig, 'pc-ig') +
-      captionBlock('&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x8E;&#xC2;&#xB5; Caption TikTok', item.caption_tiktok, 'pc-tt');
+      captionBlock('\u00C3\u00B0\u00C2\u009F\u00C2\u0093\u00C2\u00B8 Caption Instagram', item.caption_ig, 'pc-ig') +
+      captionBlock('\u00C3\u00B0\u00C2\u009F\u00C2\u008E\u00C2\u00B5 Caption TikTok', item.caption_tiktok, 'pc-tt');
   }
 
   function captionBlock(label, text, id) {
@@ -1006,7 +1006,7 @@
     const el = document.getElementById(id);
     if (!el) return;
     navigator.clipboard.writeText(el.textContent).then(() => {
-      const orig = btn.textContent; btn.textContent = '&#xC3;&#xA2;&#xC2;&#x9C;&#xC2;&#x85;'; btn.classList.add('copied');
+      const orig = btn.textContent; btn.textContent = '\u00C3\u00A2\u00C2\u009C\u00C2\u0085'; btn.classList.add('copied');
       setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
     });
   }
@@ -1015,7 +1015,7 @@
     estudioItemId = null;
     document.getElementById('estudio-content-info').style.display = 'none';
     document.getElementById('estudio-select-prompt').style.display = 'block';
-    document.getElementById('teleprompter-text').textContent = 'Selecciona un contenido para ver el gui&#xC3;&#x83;&#xC2;&#xB3;n aqu&#xC3;&#x83;&#xC2;&#xAD;...';
+    document.getElementById('teleprompter-text').textContent = 'Selecciona un contenido para ver el gui\u00C3\u0083\u00C2\u00B3n aqu\u00C3\u0083\u00C2\u00AD...';
     document.getElementById('estudio-captions').innerHTML = '<p style="color:var(--muted);font-size:13px;padding:10px 0">Selecciona contenido para ver los captions</p>';
     document.getElementById('publish-captions').innerHTML = '<p style="color:var(--muted);font-size:13px;padding:10px 0">Selecciona contenido para ver los captions</p>';
     stopTeleprompter();
@@ -1031,7 +1031,7 @@
       document.getElementById('btn-record').disabled = false;
       document.getElementById('playback-video').style.display = 'none';
       document.getElementById('download-area').style.display = 'none';
-    } catch (err) { alert('No se pudo acceder a la c&#xC3;&#x83;&#xC2;&#xA1;mara: ' + err.message + '\n\nAseg&#xC3;&#x83;&#xC2;&#xBA;rate de dar permiso al navegador.'); }
+    } catch (err) { alert('No se pudo acceder a la c\u00C3\u0083\u00C2\u00A1mara: ' + err.message + '\n\nAseg\u00C3\u0083\u00C2\u00BArate de dar permiso al navegador.'); }
   }
 
   function iniciarGrabacion() {
@@ -1071,7 +1071,7 @@
     clearInterval(recTimerInterval);
     document.getElementById('btn-stop').style.display = 'none';
     document.getElementById('btn-record').style.display = 'inline-flex';
-    document.getElementById('btn-record').textContent = '&#xC3;&#xA2;&#xC2;&#x8F;&#xC2;&#xBA; Grabar de nuevo';
+    document.getElementById('btn-record').textContent = '\u00C3\u00A2\u00C2\u008F\u00C2\u00BA Grabar de nuevo';
     document.getElementById('rec-indicator').style.display = 'none';
     document.getElementById('rec-timer').style.display = 'none';
   }
@@ -1090,7 +1090,7 @@
 
   function startTeleprompter() {
     tpRunning = true;
-    document.getElementById('tp-play-btn').textContent = '&#xC3;&#xA2;&#xC2;&#x8F;&#xC2;&#xB8; Pausar';
+    document.getElementById('tp-play-btn').textContent = '\u00C3\u00A2\u00C2\u008F\u00C2\u00B8 Pausar';
     document.getElementById('tp-play-btn').classList.add('active');
     const area = document.getElementById('teleprompter-area');
     const speed = parseInt(document.getElementById('tp-speed').value);
@@ -1099,7 +1099,7 @@
 
   function stopTeleprompter() {
     tpRunning = false; clearInterval(tpInterval);
-    document.getElementById('tp-play-btn').textContent = '&#xC3;&#xA2;&#xC2;&#x96;&#xC2;&#xB6; Auto-scroll';
+    document.getElementById('tp-play-btn').textContent = '\u00C3\u00A2\u00C2\u0096\u00C2\u00B6 Auto-scroll';
     document.getElementById('tp-play-btn').classList.remove('active');
   }
 
@@ -1107,7 +1107,7 @@
   function actualizarVelocidadTP() { if (tpRunning) { stopTeleprompter(); startTeleprompter(); } }
 
   const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  const DIAS = ['Lun','Mar','Mi&#xC3;&#x83;&#xC2;&#xA9;','Jue','Vie','S&#xC3;&#x83;&#xC2;&#xA1;b','Dom'];
+  const DIAS = ['Lun','Mar','Mi\u00C3\u0083\u00C2\u00A9','Jue','Vie','S\u00C3\u0083\u00C2\u00A1b','Dom'];
 
   function navegarMes(delta) {
     calMonth += delta;
@@ -1158,13 +1158,13 @@
     if (titleEl) titleEl.textContent = 'Posts programados en ' + MESES[calMonth] + ' (' + mesItems.length + ')';
     if (!listEl) return;
     if (mesItems.length === 0) {
-      listEl.innerHTML = '<div class="empty-state" style="padding:30px 20px"><div class="empty-icon">&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x93;&#xC2;&#x85;</div><p>Sin posts programados este mes</p></div>';
+      listEl.innerHTML = '<div class="empty-state" style="padding:30px 20px"><div class="empty-icon">\u00C3\u00B0\u00C2\u009F\u00C2\u0093\u00C2\u0085</div><p>Sin posts programados este mes</p></div>';
     } else {
       listEl.innerHTML = mesItems.map(item => {
         const fecha = new Date(item.fechaPublicacion + 'T12:00:00').toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
-        const eLabel = {idea:'&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x92;&#xC2;&#xA1; Idea',guion:'&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x93;&#xC2;&#x9D; Gui&#xC3;&#x83;&#xC2;&#xB3;n',grabado:'&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x8E;&#xC2;&#xAC; Grabado',publicado:'&#xC3;&#xA2;&#xC2;&#x9C;&#xC2;&#x85; Publicado'}[item.estado] || item.estado;
+        const eLabel = {idea:'\u00C3\u00B0\u00C2\u009F\u00C2\u0092\u00C2\u00A1 Idea',guion:'\u00C3\u00B0\u00C2\u009F\u00C2\u0093\u00C2\u009D Gui\u00C3\u0083\u00C2\u00B3n',grabado:'\u00C3\u00B0\u00C2\u009F\u00C2\u008E\u00C2\u00AC Grabado',publicado:'\u00C3\u00A2\u00C2\u009C\u00C2\u0085 Publicado'}[item.estado] || item.estado;
         const eClass = {idea:'estado-idea',guion:'estado-guion',grabado:'estado-grabado',publicado:'estado-publicado'}[item.estado] || 'estado-idea';
-        return '<div class="historia-item" onclick="abrirDetalle(' + item.id + ')"><div class="historia-item-header"><div><span class="marca-badge ' + item.marca + '" style="margin-bottom:6px;display:inline-block">' + item.marca.toUpperCase() + '</span><div class="historia-titulo">' + (item.titulo_contenido || item.idea) + '</div></div><span class="estado-badge ' + eClass + '">' + eLabel + '</span></div><div style="font-size:13px;color:var(--purple);font-weight:600">&#xC3;&#xB0;&#xC2;&#x9F;&#xC2;&#x93;&#xC2;&#x85; ' + fecha + '</div></div>';
+        return '<div class="historia-item" onclick="abrirDetalle(' + item.id + ')"><div class="historia-item-header"><div><span class="marca-badge ' + item.marca + '" style="margin-bottom:6px;display:inline-block">' + item.marca.toUpperCase() + '</span><div class="historia-titulo">' + (item.titulo_contenido || item.idea) + '</div></div><span class="estado-badge ' + eClass + '">' + eLabel + '</span></div><div style="font-size:13px;color:var(--purple);font-weight:600">\u00C3\u00B0\u00C2\u009F\u00C2\u0093\u00C2\u0085 ' + fecha + '</div></div>';
       }).join('');
     }
   }
