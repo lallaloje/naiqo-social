@@ -1047,7 +1047,9 @@
   function iniciarGrabacion() {
     if (!mediaStream) return;
     recordedChunks = []; recordingBlob = null;
-    const mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm';
+    const mimeType = MediaRecorder.isTypeSupported('video/mp4') ? 'video/mp4' :
+                    MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' :
+                    MediaRecorder.isTypeSupported('video/webm') ? 'video/webm' : '';
     mediaRecorder = new MediaRecorder(mediaStream, { mimeType });
     mediaRecorder.ondataavailable = e => { if (e.data.size > 0) recordedChunks.push(e.data); };
     mediaRecorder.onstop = () => {
@@ -1097,13 +1099,24 @@
     document.getElementById('rec-timer').style.display = 'none';
   }
 
-  function descargarVideo() {
+  async function descargarVideo() {
     if (!recordingBlob) return;
-    const a = document.createElement('a');
     const item = historial.find(h => h.id === estudioItemId);
     const nombre = (item ? item.titulo_contenido || 'video' : 'video').replace(/[^a-z0-9]/gi, '_').toLowerCase();
+    const ext = recordingBlob.type.includes('mp4') ? 'mp4' : 'webm';
+    const filename = nombre + '_' + new Date().toISOString().slice(0,10) + '.' + ext;
+    if (navigator.share && navigator.canShare) {
+      try {
+        const file = new File([recordingBlob], filename, { type: recordingBlob.type });
+        if (navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file], title: filename });
+          return;
+        }
+      } catch(e) { if (e.name === 'AbortError') return; }
+    }
+    const a = document.createElement('a');
     a.href = URL.createObjectURL(recordingBlob);
-    a.download = nombre + '_' + new Date().toISOString().slice(0,10) + '.webm';
+    a.download = filename;
     a.click();
   }
 
